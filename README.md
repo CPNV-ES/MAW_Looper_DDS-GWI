@@ -34,7 +34,7 @@ This is an app designed to create exercices than other people can respond to.
 ```
 
 ## Authors
-[Diogo (diogof648) da Silva Fernandes - DDS](https://github.com/diogof648-dev)
+[Diogo (diogof648-dev) da Silva Fernandes - DDS](https://github.com/diogof648-dev)
 
 [Geoffroy (Wildigg) Lothar Wildi - GWI](https://github.com/Wildigg)
 
