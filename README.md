@@ -34,14 +34,18 @@ composer install
 ```
 
 2. Run tests present in *tests/* folder
-3. Define the environment variables
+3. Define PSR-12 in PhpStorm
+   1. [CodeSniffer](https://www.jetbrains.com/help/phpstorm/using-php-code-sniffer.html#configure-tool-options)
+      > Define "Coding standard:" to PSR-12
+   2. [Code Style](https://www.jetbrains.com/help/phpstorm/settings-code-style-php.html#copyLanguageFrameworkCodeStylePHP)
+4. Define the environment variables
 
 ```bash
 cp config/config.example.php config/config.php
 vi config/config.php
 ```
 
-4. Run PHP server
+5. Run PHP server
 
 ```bash
 php -S localhost:8080
