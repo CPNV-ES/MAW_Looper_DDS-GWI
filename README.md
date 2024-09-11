@@ -1,4 +1,4 @@
-# MAW 11
+# Looper - MAW 11
 ## Description
 This is an app designed to create exercices than other people can respond to.
 
