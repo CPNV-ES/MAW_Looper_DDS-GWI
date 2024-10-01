@@ -1,0 +1,52 @@
+classDiagram
+    note "Projet: MAW11 DB
+        Titre: MLD DB
+        Auteur: Geoffroy Wildi
+        Version: 1.0 du 24.09.2024
+        Source: MAW11 DB, 1.1 du 24.09.2024"
+class status {
+    id Int
+    title Text
+    pk(id)
+}
+class exercises {
+    id Int
+    name Text
+    status_id Int
+    pk(id)
+    fk(status_id)
+}
+class types {
+    id Int
+    title Text
+    pk(id)
+}
+class fields {
+    id Int
+    name Text
+    type_id Int
+    exercise_id Int
+    pk(id)
+    fk(type_id, exercise_id)
+}
+class tests {
+    id Int
+    timestamp_test Date
+    exercise_id Int
+    pk(id)
+    fk(exercise_id)
+}
+class tests_answer_fields {
+    id Int
+    answer Text
+    test_id Int
+    field_id Int
+    pk(id)
+    fk(test_id, field_id)
+}
+tests_answer_fields  -->  tests
+tests_answer_fields  -->  fields
+tests --> exercises
+fields --> types
+fields --> exercises
+exercises --> status
