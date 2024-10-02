@@ -478,3 +478,5 @@ composer.lock
 node_modules/*
 
 .idea/*
+
+.env
