@@ -17,6 +17,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Database creation
+--
+
+DROP DATABASE IF EXISTS `looper`;
+CREATE DATABASE `looper`;
+USE `looper`;
+
+--
 -- Table structure for table `exercises`
 --
 
