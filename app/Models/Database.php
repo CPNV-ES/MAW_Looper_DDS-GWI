@@ -27,11 +27,14 @@ class Database
      * Method that handles the SELECT queries for the database
      *
      * @param  string $table
-     * @param  array $columns Example -> array("column1", "column2")
-     * @param  array $filters Example -> array(
+     * @param  array $columns Example -> ["column1", "column2"]
+     * @param  array $filters Example -> [
      *  ["column1", "sql_operator", "%value1%"],
      *  ["column1", "sql_operator", "%value1%"]
-     * ) /!\ FILTERS ARE EXCLUSIVELY ANDs !
+     * ] /!\ FILTERS ARE EXCLUSIVELY ANDs !
+     * @param  int $count How many line should be selected
+     * @param  int $offset From which line to start selecting
+     * @param  array $orderBy Example -> ["column", "ASC/DESC"] (ONLY 2 VALUES !)
      * @return array
      */
     public function select(
