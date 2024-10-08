@@ -2,11 +2,13 @@
 
 use App\Core\Router;
 use App\Controllers\Views;
+use App\Controllers\ExerciseController;
 
 require_once __DIR__ . "/../vendor/autoload.php";
 
 $router = new Router();
 $views = new Views();
+$exercise = new ExerciseController();
 
 $router->get('/', [$views, 'home']);
 
@@ -60,9 +62,7 @@ $router->get('/exercises/{exerciseId}/fields', [$views, 'editFields']);
 ###########
 
 # Create an exercise
-$router->post('/exercises', function () {
-    echo "Create an exercise (POST)";
-});
+$router->post('/exercises', [$exercise, 'exerciseCreation']);
 
 # Update an exercise (status for example)
 $router->put('/exercises/{exerciseId}', function ($exerciseId) {
