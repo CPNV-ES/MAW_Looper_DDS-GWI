@@ -11,7 +11,9 @@ class ExerciseController extends Controller
     {
         $name = $_POST['exercise']['name'];
 
-        if (!isset($name)) {
+        # ToDo check if want to put empty string check here or in Model.
+        //Block if $name is null or an empty string
+        if (!isset($name) || $name == '') {
             header('Location: /exercises/new');
 
             return;
