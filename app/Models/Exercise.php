@@ -25,7 +25,7 @@ class Exercise extends Model
         }
 
         $table = 'exercises';
-        $values = ['name' => $name, 'status_id' => 1];
+        $values = ['name' => $name, 'status_id' => $responseFK[0]['id']];
 
         $response = $this->db->insert($table, $values);
 
