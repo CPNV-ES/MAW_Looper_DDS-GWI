@@ -2,11 +2,13 @@
 
 use App\Core\Router;
 use App\Controllers\Views;
+use App\Controllers\ExerciseController;
 
 require_once __DIR__ . "/../vendor/autoload.php";
 
 $router = new Router();
 $views = new Views();
+$exercise = new ExerciseController();
 
 $router->get('/', [$views, 'home']);
 
@@ -53,7 +55,7 @@ $router->get('/exercises/{exerciseId}/results/{fieldId}', function ($exerciseId,
 });
 
 # Edit an exercise
-$router->get('/exercises/{exerciseId}/fields', [$views, 'editFields']);
+$router->get('/exercises/{exerciseId}/fields', [$exercise, 'editExercise']);
 
 ###########
 # ACTIONS #
@@ -85,9 +87,10 @@ $router->patch('/exercises/{exerciseId}/fulfillments/{answerId}', function ($exe
 });
 
 # Create exercise fields
-$router->post('/exercises/{exerciseId}/fields', function ($exerciseId) {
-    echo "Create exercise fields (POST)";
-});
+$router->post('/exercises/{exerciseId}/fields', [$exercise, 'addField']);
+
+# Delete exercise field
+$router->delete('/exercises/{exerciseId}/fields/{fieldId}', [$exercise, 'deleteField']);
 
 # If no route matches, show a 404 error
 if (!$router->routeMatched()) {
