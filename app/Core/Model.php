@@ -6,7 +6,7 @@ use App\Models\Database;
 
 class Model
 {
-    private Database $db;
+    protected Database $db;
 
     public function __construct()
     {
