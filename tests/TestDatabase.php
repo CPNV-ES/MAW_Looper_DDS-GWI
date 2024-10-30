@@ -32,14 +32,14 @@ class TestDatabase extends TestCase
 
         $value = [
             'name' => 'test',
-            'status_id' => 899997
+            'status_id' => 1
         ];
 
         $result = $this->database->insert($table, $value);
 
         $count_after = count($this->database->select($table, $columns));
 
-        $this->assertTrue($result);
+        $this->assertIsString($result);
         $this->assertNotEquals($count_before, $count_after);
     }
 
@@ -75,7 +75,7 @@ class TestDatabase extends TestCase
         $before = $this->database->select($table, $columns, $filters);
 
         $values = [
-            'name' => $before['name'] . 't',
+            'name' => $before[0]['name'] . 't',
         ];
 
         $result = $this->database->update($table, $values, $filters);
@@ -91,7 +91,7 @@ class TestDatabase extends TestCase
         $table = 'exercises';
         $value = [
             'name' => 'test_delete',
-            'status_id' => 899997
+            'status_id' => 1
         ];
 
         $this->database->insert($table, $value);

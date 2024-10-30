@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
+use App\Models\Exercise;
+use App\Models\Field;
 use SebastianBergmann\Type\VoidType;
 
 class Views extends Controller
@@ -27,8 +29,13 @@ class Views extends Controller
         require __DIR__ . "/../Views/manageExercises.php";
     }
 
-    public function editFields($exerciseId): void
+    public function editFields(Exercise $exercise): void
     {
         require __DIR__ . "/../Views/editFields.php";
+    }
+
+    public function editField(Exercise $exercise, Field $field): void
+    {
+        require __DIR__ . "/../Views/editField.php";
     }
 }

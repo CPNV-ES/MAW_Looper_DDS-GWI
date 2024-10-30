@@ -101,7 +101,7 @@ class Database
      *
      * @param  string $table
      * @param  array $values Example -> array("column1" => "value1", "column2" => "value2")
-     * @return bool | string
+     * @return bool
      */
     public function insert(string $table, array $values): bool | string
     {
@@ -134,16 +134,14 @@ class Database
         $sql .= ");";
 
         $db = $this->dbConnection();
-        $response = null;
 
         try {
             $db->prepare($sql)->execute($values);
-            $response = $db->lastInsertId();
         } catch (Exception $e) {
             return false;
         }
 
-        return $response;
+        return $db->lastInsertId();
     }
 
     /**

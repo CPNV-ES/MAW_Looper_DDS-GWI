@@ -2,7 +2,7 @@
 ob_start();
 
 $headColor = "orange";
-$headTitle = "Exercise : <a href=\"\" class=\"font-bold\">" . $exerciseId . "</a>";
+$headTitle = "Exercise : <a href=\"\" class=\"font-bold\">" . $exercise->name . "</a>";
 
 require_once "components/head.php";
 ?>
@@ -17,31 +17,34 @@ require_once "components/head.php";
                 <th>Value kind</th>
                 <th></th>
             </tr>
-            <?php for($i = 0; $i < 4; $i++): ?>
+            <?php foreach ($exercise->fields as $field) : ?>
                 <tr>
                     <?php
-                        $label = "Label - " . $i;
-                        $valueKind = "Value_" . $i;
+                        $label = $field->name;
+                        $valueKind = $field->type->title;
+                        $fieldId = $field->id;
                         require "components/editFields/row-table.php"
                     ?>
                 </tr>
-            <?php endfor; ?>
+            <?php endforeach; ?>
         </table>
 
-        <a href="/exercises/answering" class="button bg-purple"><i class="fa-solid fa-comment"></i> Complete and be ready for answers</a>
+        <a href="/exercises/answering" class="button bg-purple">
+            <i class="fa-solid fa-comment"></i> Complete and be ready for answers
+        </a>
     </div>
     <div class="grow space-y-10">
         <h1 class="text-7xl">New Field</h1>
 
         <div class="form">
-        <form action="#">
+        <form action="/exercises/<?=$exercise->id?>/fields" method="post">
             <label for="field_label">Label</label>
-            <input type="text" name="field[label]" id="field_label">
+            <input type="text" name="field[label]" id="field_label" required>
             <label for="field_value_kind" class="mt-10">Value kind</label>
-            <select name="field[value_kind]" id="field_value_kind">
-                <option selected="selected" value="single_line">Single line text</option>
-                <option value="single_line_list">List of single lines</option>
-                <option value="multi_line">Multi-line text</option>
+            <select name="field[value_kind]" id="field_value_kind" required>
+                <option selected="selected" value="1">Single line text</option>
+                <option value="2">List of single lines</option>
+                <option value="3">Multi-line text</option>
             </select>
             <input type="submit" value="Create field" class="bg-purple mt-12">
         </form>
