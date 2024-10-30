@@ -21,6 +21,7 @@ require_once "components/head.php";
                 <input type="text" name="field[label]" id="field_label" value="<?=$field->name?>" required>
                 <label for="field_value_kind" class="mt-10">Value kind</label>
                 <select name="field[value_kind]" id="field_value_kind" required>
+                    <!-- ToDo fetch fields type (name + id) directly from DB -->
                     <option
                         <?php if ($field->type->id == 1) :?>
                             selected
