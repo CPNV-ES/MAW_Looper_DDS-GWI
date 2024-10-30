@@ -1,4 +1,4 @@
-<tr xmlns="http://www.w3.org/1999/html">
+<tr>
     <td><?=$label?></td>
     <td><?=$valueKind?></td>
     <td class="flex">
