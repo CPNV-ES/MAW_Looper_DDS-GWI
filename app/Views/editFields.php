@@ -39,9 +39,9 @@ require_once "components/head.php";
         <div class="form">
         <form action="/exercises/<?=$exercise->id?>/fields" method="post">
             <label for="field_label">Label</label>
-            <input type="text" name="field[label]" id="field_label">
+            <input type="text" name="field[label]" id="field_label" required>
             <label for="field_value_kind" class="mt-10">Value kind</label>
-            <select name="field[value_kind]" id="field_value_kind">
+            <select name="field[value_kind]" id="field_value_kind" required>
                 <option selected="selected" value="1">Single line text</option>
                 <option value="2">List of single lines</option>
                 <option value="3">Multi-line text</option>
