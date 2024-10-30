@@ -57,6 +57,9 @@ $router->get('/exercises/{exerciseId}/results/{fieldId}', function ($exerciseId,
 # Edit an exercise
 $router->get('/exercises/{exerciseId}/fields', [$exercise, 'editExercise']);
 
+# Edit a field
+$router->get('/exercises/{exerciseId}/fields/{fieldId}/edit', [$exercise, 'editFieldPage']);
+
 ###########
 # ACTIONS #
 ###########
@@ -91,6 +94,9 @@ $router->post('/exercises/{exerciseId}/fields', [$exercise, 'addField']);
 
 # Delete exercise field
 $router->delete('/exercises/{exerciseId}/fields/{fieldId}', [$exercise, 'deleteField']);
+
+# Update exercise field
+$router->patch('/exercises/{exerciseId}/fields/{fieldId}', [$exercise, 'editField']);
 
 # If no route matches, show a 404 error
 if (!$router->routeMatched()) {
