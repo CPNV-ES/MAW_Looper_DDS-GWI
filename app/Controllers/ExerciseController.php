@@ -34,7 +34,7 @@ class ExerciseController extends Controller
         header('Location: /exercises/' . $exercise->id . '/fields');
     }
 
-    public function editExercise($exerciseId)
+    public function editExercisePage($exerciseId)
     {
         $exercise = (new Exercise())->getExercise($exerciseId);
 

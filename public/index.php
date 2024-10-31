@@ -55,7 +55,7 @@ $router->get('/exercises/{exerciseId}/results/{fieldId}', function ($exerciseId,
 });
 
 # Edit an exercise
-$router->get('/exercises/{exerciseId}/fields', [$exercise, 'editExercise']);
+$router->get('/exercises/{exerciseId}/fields', [$exercise, 'editExercisePage']);
 
 # Edit a field
 $router->get('/exercises/{exerciseId}/fields/{fieldId}/edit', [$exercise, 'editFieldPage']);
