@@ -12,6 +12,23 @@ class TestExercise extends TestCase
         $this->exercise = new Exercise();
     }
 
+    public function testCanCreateExercise()
+    {
+        $name = 'Test Exercise';
+
+        $response = $this->exercise->create($name);
+
+        $this->assertTrue($response);
+    }
+
+    public function testCanGetExecise()
+    {
+        $exercise = (new Exercise())->getExercise(1);
+
+        $this->assertequals(Exercise::class, get_class($exercise));
+        $this->assertEquals(1, $exercise->id);
+    }
+
     public function testCanAlterExerciseStatus()
     {
         //ToDo use exercise->creation

@@ -180,6 +180,12 @@ class Router
     {
         $httpMethod = $_SERVER['REQUEST_METHOD'];
 
+        if ($httpMethod === 'POST') {
+            if (isset($_POST['_method'])) {
+                $httpMethod = $_POST['_method'];
+            }
+        }
+
         if ($httpMethod === $method) {
             return true;
         }

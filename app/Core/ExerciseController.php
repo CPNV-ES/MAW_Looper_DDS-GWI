@@ -7,6 +7,7 @@ use App\Models\Exercise;
 
 class ExerciseController extends Controller
 {
+    //ToDo deal with thrown Exception (need to to see standard to deal with this)
     public function exerciseStatusAlteration()
     {
         $idExercise = $_POST['exercise']['id'];
@@ -20,7 +21,6 @@ class ExerciseController extends Controller
 
         $exercise = new Exercise();
 
-        //ToDo deal with Exception (need to to see standard to deal with this)
         $response = $exercise->alterStatus($idExercise);
 
         header('Location: /exercises');
