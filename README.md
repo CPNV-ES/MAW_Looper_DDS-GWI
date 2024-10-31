@@ -5,6 +5,7 @@ This is an app designed to create exercices than other people can respond to.
 ## Getting started
 ### Prerequisites
 - PHP 8.3.11
+- MariaDB 11.5.2
 - Composer 2.7.8
 - Xdebug 3.3.2
 - Git 2.46.0
@@ -16,9 +17,10 @@ This is an app designed to create exercices than other people can respond to.
    1. [macOS](https://www.php.net/manual/en/install.macosx.packages.php)
    2. [Windows](https://www.geeksforgeeks.org/how-to-install-php-in-windows-10/)
    3. [On Debian based distros](https://php.watch/articles/php-8.3-install-upgrade-on-debian-ubuntu#php83-debian-quick)
-2. [Install Composer](https://getcomposer.org/download/)
-3. [Install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-4. [Install Xdebug](https://xdebug.org/docs/install)
+2. [Install MariaDB](https://www.vinchin.com/database-tips/install-mariadb-on-windows-linux-macos.html)
+3. [Install Composer](https://getcomposer.org/download/)
+4. [Install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+5. [Install Xdebug](https://xdebug.org/docs/install)
 
 For Git Flow, it depends on which OS you are. If you are using Windows, it's all good, it already comes installed with git. For the others, [follow this tutorial](https://skoch.github.io/Git-Workflow/).
 
@@ -41,9 +43,16 @@ composer install
 4. Define the environment variables
 
 ```bash
-cp config/config.example.php config/config.php
-vi config/config.php
+vi app/Models/.env
+
+DB_HOST="localhost"
+DB_PORT="3306" # Generally 3306
+DB_NAME=""
+DB_USER=""
+DB_PASSWORD=""
 ```
+
+5. Run DB creation script on your Database (db/db_creation.sql)
 
 5. Run PHP server
 
@@ -56,7 +65,7 @@ php -S localhost:8080
 #### Prerequisites
 - **Web Server:** Apache, Nginx, ...
 - **PHP:** 8.3.11
-- **Database:** Not yet defined
+- **Database:** MariaDB
 - **Composer:** For managing project dependencies
 
 #### Steps
@@ -73,12 +82,16 @@ composer install
 
 3. Set-up environment variables
 ```bash
-cp config/config.example.php config/config.php
-vi config/config.php
+vi app/Models/.env
+
+DB_HOST="localhost"
+DB_PORT="3306" # Generally 3306
+DB_NAME=""
+DB_USER=""
+DB_PASSWORD=""
 ```
 
-4. Set-up database
-> WIP
+4. Run DB creation script on your Database (db/db_creation.sql)
 
 5. Apache
    1. Enable rewrite mod
@@ -89,11 +102,17 @@ vi config/config.php
    2. Update .htaccess 
    ```bash
    <IfModule mod_rewrite.c>
-       RewriteEngine On
-       RewriteBase /
-       RewriteCond %{REQUEST_FILENAME} !-f
-       RewriteCond %{REQUEST_FILENAME} !-d
-       RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+    RewriteEngine On
+    RewriteBase /
+
+    # Redirect all traffic to /public
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ /public/$1 [L]
+
+    # If the file or folder doesn't exists, redirect to /public/index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ public/index.php [QSA,L]
    </IfModule>
    ```
 
