@@ -20,6 +20,7 @@ class ExerciseController extends Controller
 
         $exercise = new Exercise();
 
+        //ToDo deal with Exception (need to to see standard to deal with this)
         $response = $exercise->alterStatus($idExercise);
 
         header('Location: /exercises');
