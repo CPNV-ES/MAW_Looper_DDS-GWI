@@ -30,21 +30,16 @@ class Exercise extends Model
 
     public function create(string $name): bool
     {
-        //ToDo see where to put this in code exactly (fk id fetch part)
-        $tableFK = 'status';
-        $valuesFK = ['id'];
-        // Building is base status of exercise
-        $filterFK = [['title', '=', 'Building']];
-
-        $responseFK = $this->db->select($tableFK, $valuesFK, $filterFK);
+        $baseStatus = Status::getStatus()[array_search($this->orderStatus[0], Status::getStatus())];
 
         //Raise error if base status is missing
-        if (!$responseFK) {
+        if (is_null($baseStatus)) {
+            //ToDo see if move this into it's own test
             throw new Exception("Base exercise status not found");
         }
 
         $table = 'exercises';
-        $values = ['name' => $name, 'status_id' => $responseFK[0]['id']];
+        $values = ['name' => $name, 'status_id' => $baseStatus['id']];
 
         $response = $this->db->insert($table, $values);
 
