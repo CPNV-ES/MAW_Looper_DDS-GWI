@@ -67,10 +67,8 @@ $router->get('/exercises/{exerciseId}/fields/{fieldId}/edit', [$exercise, 'editF
 # Create an exercise
 $router->post('/exercises', [$exercise, 'exerciseCreation']);
 
-# Update an exercise (status for example)
-$router->put('/exercises/{exerciseId}', function ($exerciseId) {
-    echo "Update an exercise (status for example) (PUT)";
-});
+# Update an exercise status
+$router->put('/exercises/{exerciseId}', [$exercise, 'exerciseStatusAlteration']);
 
 # Delete an exercise
 $router->delete('/exercises/{exerciseId}', function ($exerciseId) {

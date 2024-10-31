@@ -116,4 +116,21 @@ class ExerciseController extends Controller
 
         header('Location: /exercises/' . $exerciseId . '/fields');
     }
+
+    public function exerciseStatusAlteration()
+    {
+        $idExercise = $_POST['exercise']['id'];
+
+        //Block if $name is null or isn't a string of a number
+        if (!isset($idExercise) || ctype_digit($idExercise)) {
+            header('Location: /exercises');
+
+            return;
+        }
+
+        //ToDo deal with thrown Exception (need to to see standard to deal with this)
+        (new Exercise())->alterStatus($idExercise);
+
+        header('Location: /exercises');
+    }
 }
