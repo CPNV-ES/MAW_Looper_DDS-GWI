@@ -1,9 +1,7 @@
-[Diagram direct access](https://www.plantuml.com/plantuml/png/jLLDJzj04BtlhvYZeyOeq9ugGAH9g2nHYWgYXxP26tiIN3Qxrkwu9Gtyzwu_7CPrGgEgS5ZCVBnvE_E6FN4aBUKB9OIxItKchLn0hAHpGoARJdF2A3RwCls5C10Ya_6Td2CCi-ph1vEWMWa105K6Z2N9gNIu4b3_X71h7C5RS1vCpvazCtQZFPcUomLkykGEhTxYotpvdyOcNTyhSAWmfi1JKq-vVOYDoXVQUSkNRtsOfOhGEZZoVtcJj5OkYvXSaxSDl2dLr0SpcpbiMso2zjsoJlH7hpnP_LHxujtwFwJAqQrJfiOeU839VOmPfKOpW3nB9E5p00LJdQH5taw82Ihi8Eu8mYOrCbfZN9Y38lPY_B5qFt9DdAQeaXLlHrArpgFgN2dcQGstwwPbvjqLu9N_xaRWFTeuTHXjAH52-yRCqQYXSRKcU7WO6-tjUKp67XzN58BrHOxAAlqs_yPQqex-3ELCcQF7YiwHoZeks1RSDCDpxQO5i-9iKdfrA0kCBKh2AhR5d5DEkbJNPU6XL4T7Lftod35BOTh-2mjDd4PZsQb220xfkjoKW6zSLwXhNUqcLag9AUb5bLQGwggjJM2pWCfCtiSUNw1_QDAadi9_MMX7ad8NRKql1-oULFvIJMukjUD6SzvCUPtLQkkPAPCDg2dzt8utCJkFwx7zJe-CnTOpNJ_S_3-v1sWUx-sDgXA3favnCjIHqMIDKcXNZ4YP0c7u15yEqriUQZonrYCtDfVcDcuqbIXgjBqzjYf226q8GJguiEOxnYJgt_wMPyPaQCLLlJpN-pUZWlqubNCh5pUrUvZJhR6kw4fgvWR6GxYCpgw7S3hvT3uy7qyk-_0UpMncpT93qgsqy3aw6qV2NxF07RmEzmVXmU3WZK2TGC57Y1F_cI_KRm00)
-
-Code for it (use it on [PlantUML website](https://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000):
+[Diagram direct access](https://www.plantuml.com/plantuml/uml/jLRVJzim47xtNt6FgTQYmlOqVeYkBLCbnj3AsCCs8JUvbWpNZco7qHN-zpbEN2vBMtKJGoYK-_7TT-Vlt9mQoxNDvuAPkrHcNFCvn88RqxDMfvFSuYXMSfp-GkWobl7uZiyGUbdsxODAK2mP0u0o0mRSyWatk6HG_NJWLXaBRy4uC3aZzapfjVPaSi7dkCwJ6zHoWozpvNygdJHzhy2WmDX6Zffupcr3h4G-byPPldvlmpGL5hM1O_UVCt6j-QA8oQLrjgupfTAsGKsd1kiMdQ1-jwWItQFbdwH-AXtnPlrxBd8qgvI9KW8UOVWGOsPJ9Gb0dYNSuZQ0WgbCqY9l9yG41JOHTmAX9zLNKc9ScACYzdBmqRkVg2REKXJ9aeuZAKVdK6Kk1F7K3hVfjelCkKl0A_Uv6O4FgEFKu6X3YGxKEoQEe8RWgftWqL6ifBFdiLNwvAIa4AqQEVPLsdN-mUffZ_uC9KofeqMApj3wEYRQ51o6uRWsqw9fyGmfhIgK1COQkSKojiQSKawQL5TbuT6heo6hPdd2cAGGRMzduG0eZM3PgK873DfhloaHtRYcK5UwsasiDhL4IVzDQO5KKsrr0ki5v3Ff75jqWVvXICFg55vaeOtbDZU1sYR_LT5d7UEG17aLcETLMCCYdqzGbxj42Xs--665uUnuCv3-gO8RArhV2w9mSj2Xj8bQuTjhVS2sooJ4a4mkBEgnv-cw2W4-yMzNZSgeH5pIL6yXt0dcvyntTQ_IfDvK2KDQBYizrTzJ-ahZabQlNbpeDvb322ylMmxO9qQXeU99KFjAMgs4GBqC7RjVdmATpZEy5wApF5PuRBMFr1X6JMrbkzH2mrIv0HN-tXwvF1XZKba4Rk1IgnyOMrRzTNsVAvMXPbVLTNAzVzCl-XcaVARv_APozt9xgxGfvfIgcO913yQZy-iUd0q_NVGk1iDn6zwZcawrMZX8UyirV1cT3qRCDLxWTbztzhkTW-x16uOoWO8FEtMVyhdu3G00)
+Code for it (use it on [PlantUML website](http://www.plantuml.com/plantuml/uml/)
 ```md
 @startuml
-
 skinparam classAttributeIconSize 0
 
 package App\Model{
@@ -51,15 +49,25 @@ package App\Model{
         + id : int | null
         + name : string | null
         + statusId : int | null
+        + statusTitle string | null;
         + fields : Field[] | null
+        + numberFields int | null;
         - table : string
         - columns : string[]
         + <<constructor>> Exercise(id : int = null, name : string = null, statusId : int = null)
         + create(name : string) : bool
+        + getExercises() : array
         + getExercise(exerciseId : int = null) : Exercise
+        + alterStatus(idExercise: int) : bool
         - setValues(values : [])
     }
 
+
+    class Status{
+        - status : array
+        - setUp() : void
+        + getStatus() : array
+    }
 }
 
 package App\Core{
@@ -78,6 +86,7 @@ Model -- Database
 Field --|> Model
 FieldType --|> Model
 Exercise --|> Model
+Status --|> Model
 
 Exercise --o Field
 Field ..> FieldType
@@ -89,6 +98,5 @@ Title : V1_ClassDiagram_Looper
 Authors : Diogo DA SILVA FERNANDES, Geoffroy Lothar WILDI
 Date : 03-10-2024
 end note
-
 @enduml
 ```
