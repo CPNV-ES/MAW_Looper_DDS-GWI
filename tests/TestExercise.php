@@ -25,6 +25,23 @@ class TestExercise extends TestCase
         $this->assertIsInt($response);
     }
 
+    public function testCanGetExercises()
+    {
+        $exerciseName = 'Test Exercise Alter Status';
+        $fieldName = 'Test Field Alter Status';
+
+        $exerciseIdNoField = $this->exercise->create($exerciseName);
+        $exerciseIdWithField = $this->exercise->create($exerciseName);
+        $this->field->createField($fieldName, 1, $exerciseIdWithField);
+
+        $exercises = $this->exercise->getExercises();
+
+        $this->assertIsArray($exercises);
+        $this->assertObjectHasProperty('numberFields', $exercises[0]);
+
+        //ToDo make an check extracting numberField from the 2 created exercises to check if number match
+    }
+
     public function testCanGetExercise()
     {
         $exercise = (new Exercise())->getExercise(1);
