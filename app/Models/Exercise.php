@@ -52,25 +52,32 @@ class Exercise extends Model
         return $this->id ?? false;
     }
 
-    public function getExercise(int $exerciseId = null): Exercise
+    public function getExercises(int $exerciseId = null): Exercise | array
     {
-        $filter = [[
-            'id',
-            '=',
-            $exerciseId == null ? $this->id : $exerciseId
-        ]];
+        if ($exerciseId !== null) {
+            $filter = [[
+                'id',
+                '=',
+                $exerciseId
+            ]];
 
-        $result = $this->db->select($this->table, $this->columns, $filter);
+            $result = $this->db->select($this->table, $this->columns, $filter)[0] ?? null;
 
-        if (!isset($result[0])) {
-            throw new \Exception('Exercise not found');
+            if ($result == null) {
+                throw new \Exception('Exercise not found');
+            }
+
+            return new Exercise($result['id'], $result['name'], $result['status_id']);
         }
 
-        $id = $result[0]['id'];
-        $name = $result[0]['name'];
-        $status_id = $result[0]['status_id'];
+        $exercises = $this->db->select($this->table, $this->columns);
 
-        return new Exercise($id, $name, $status_id);
+        $list = [];
+        foreach ($exercises as $exercise) {
+            $list[] = new Exercise($exercise['id'], $exercise['name'], $exercise['status_id']);
+        }
+
+        return $list;
     }
 
     private function setValues(array $values): void
