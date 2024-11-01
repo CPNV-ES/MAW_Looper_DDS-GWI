@@ -11,9 +11,10 @@ class Exercise extends Model
     public string | null $name;
     public int | null $statusId;
     public array | null $fields;
+    //ToDo ask what to do: No need to have full field content only number for exercisesPage
+    public int | null $numberFields;
     private string $table = 'exercises';
     private array $columns = ['id', 'name', 'status_id'];
-    private array $orderStatus = ['Building', 'Answering', 'Closed'];
 
     public function __construct(int $id = null, string $name = null, int $statusId = null)
     {
@@ -48,6 +49,28 @@ class Exercise extends Model
         return $this->id ?? false;
     }
 
+    public function getExercises(): array
+    {
+        $values = $this->db->select($this->table, $this->columns);
+
+        $exercises = [];
+
+        foreach ($values as $value) {
+            $id = $value["id"];
+            $name = $value["name"];
+            $statusId = $value["status_id"];
+
+            $exercise = new Exercise($id, $name, $statusId);
+            //ToDo see best way to deal with limiting data transfer
+            $exercise->numberFields = count($exercise->fields);
+            $exercise->fields = null;
+
+            $exercises[] = $exercise;
+        }
+
+        return $exercises;
+    }
+
     public function getExercise(int $exerciseId = null): Exercise
     {
         $filter = [[
@@ -72,6 +95,8 @@ class Exercise extends Model
     public function alterStatus(int $idExercise): bool
     {
         $statusArray = Status::getStatus();
+        //Status update order
+        $orderStatus = ['Building', 'Answering', 'Closed'];
 
         //Fetch exercise based on given id
         $tableExercise = 'exercises';
@@ -91,7 +116,7 @@ class Exercise extends Model
             //Get current status of exercise
             if ($responseExercise[0]['status_id'] == $status['id']) {
                 //Get the next status following the order of title in $orderStatus
-                $statusNextTitle = $this->orderStatus[array_search($status['title'], $this->orderStatus) + 1];
+                $statusNextTitle = $orderStatus[array_search($status['title'], $orderStatus) + 1];
 
                 //Throw error if there isn't a next step for the current status
                 if (is_null($statusNextTitle)) {
