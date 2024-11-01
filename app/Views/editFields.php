@@ -28,10 +28,19 @@ require_once "components/head.php";
                 </tr>
             <?php endforeach; ?>
         </table>
-
-        <a href="/exercises/answering" class="button bg-purple">
-            <i class="fa-solid fa-comment"></i> Complete and be ready for answers
-        </a>
+        <!-- ToDo remove else once figured out how to fix onsubmit for php -->
+        <?php if ($exercise->fields): ?>
+            <form action="/exercises/<?=$exercise->id?>" method="POST">
+                <input type="hidden" name="_method" value="PUT"/>
+                <button class="button bg-purple" type="submit">
+                    <i class="fa-solid fa-comment"></i> Complete and be ready for answers
+                </button>
+            </form>
+        <?php else: ?>
+            <button class="button bg-purple" type="submit">
+                <i class="fa-solid fa-comment"></i> Complete and be ready for answers
+            </button>
+        <?php endif; ?>
     </div>
     <div class="grow space-y-10">
         <h1 class="text-7xl">New Field</h1>
