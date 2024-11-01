@@ -14,9 +14,14 @@ class Views extends Controller
         require __DIR__ . "/../Views/home.php";
     }
 
-    public function takeAnExercise(): void
+    public function takeAnExercise(array $exercises): void
     {
         require __DIR__ . "/../Views/takeAnExercise.php";
+    }
+
+    public function answerExercise(Exercise $exercise, array $fields): void
+    {
+        require __DIR__ . "/../Views/answerExercise.php";
     }
 
     public function createAnExercise(): void
