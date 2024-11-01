@@ -28,7 +28,7 @@ class Exercise extends Model
         $this->setValues($values);
     }
 
-    public function create(string $name): bool
+    public function create(string $name): int
     {
         $baseStatus = Status::getStatus()[array_search($this->orderStatus[0], Status::getStatus())];
 
