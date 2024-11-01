@@ -10,6 +10,8 @@ class Exercise extends Model
     public int | null $id;
     public string | null $name;
     public int | null $statusId;
+    //ToDo make field array? Remove top attribute? For now making 2 attributes to avoid potential problems
+    public string | null $statusTitle;
     public array | null $fields;
     //ToDo ask what to do: No need to have full field content only number for exercisesPage
     public int | null $numberFields;
@@ -64,6 +66,17 @@ class Exercise extends Model
             //ToDo see best way to deal with limiting data transfer
             $exercise->numberFields = count($exercise->fields);
             $exercise->fields = null;
+
+            //ToDo adapt/remove this in refactor (put it maybe it Status class)
+            if ($exercise->statusId == 1) {
+                $exercise->statusTitle = 'Building';
+            } elseif ($exercise->statusId == 2) {
+                $exercise->statusTitle = 'Answering';
+            } elseif ($exercise->statusId == 3) {
+                $exercise->statusTitle = 'Closed';
+            } else {
+                $exercise->statusTitle = 'PlaceHolder';
+            }
 
             $exercises[] = $exercise;
         }
