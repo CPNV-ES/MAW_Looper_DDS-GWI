@@ -75,7 +75,7 @@ class Exercise extends Model
         foreach ($exercises as $exercise) {
             $new_exercise = new Exercise($exercise['id'], $exercise['name'], $exercise['status_id']);
 
-            $new_exercise->numberFields = count($exercise->fields);
+            $new_exercise->numberFields = count($new_exercise->fields);
             $new_exercise->fields = null;
 
             //ToDo adapt/remove this in refactor (put it maybe it Status class)

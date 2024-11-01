@@ -122,7 +122,7 @@ class ExerciseController extends Controller
 
     public function editFieldPage($exerciseId, $fieldId)
     {
-        $exercise = (new Exercise())->getExercise($exerciseId);
+        $exercise = (new Exercise())->getExercises($exerciseId);
 
         if ($exercise->statusId != 1) {
             header('Location: /');
@@ -136,7 +136,7 @@ class ExerciseController extends Controller
 
     public function editField($exerciseId, $fieldId)
     {
-        $exercise = (new Exercise())->getExercise($exerciseId);
+        $exercise = (new Exercise())->getExercises($exerciseId);
 
         if ($exercise->statusId != 1) {
             header('Location: /');
