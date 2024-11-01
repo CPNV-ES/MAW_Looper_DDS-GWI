@@ -7,7 +7,6 @@ use App\Models\Answer;
 use App\Models\Exercise;
 use App\Models\Field;
 use App\Models\Test;
-use Cassandra\Date;
 
 class ExerciseController extends Controller
 {
@@ -74,7 +73,7 @@ class ExerciseController extends Controller
         header('Location: /exercises/' . $exercise->id . '/fields');
     }
 
-    public function editExercise($exerciseId)
+    public function editExercisePage($exerciseId)
     {
         $exercise = (new Exercise())->getExercises($exerciseId);
 
@@ -155,5 +154,27 @@ class ExerciseController extends Controller
         $field->updateField($name, $typeId, $exerciseId);
 
         header('Location: /exercises/' . $exerciseId . '/fields');
+    }
+
+    public function exercisesPage()
+    {
+        $exercises = (new Exercise())->getExercises();
+
+        (new Views())->manageExercises($exercises);
+    }
+
+    public function exerciseStatusAlteration($exerciseId)
+    {
+        //Block if $name is null or isn't a string of a number
+        if (!isset($exerciseId) || !ctype_digit($exerciseId)) {
+            header('Location: /exercises');
+
+            return;
+        }
+
+        //ToDo deal with thrown Exception (need to to see standard to deal with this)
+        (new Exercise())->alterStatus($exerciseId);
+
+        header('Location: /exercises');
     }
 }

@@ -3,7 +3,12 @@
         <?=$title?>
     </div>
     <div class="buttons flex space-x-2">
-        <a href="/exercises/<?=$exerciseId?>?exercise[status]=answering"><i class="fa-solid fa-comment text-purple"></i></a>
+        <?php if ($ready): ?>
+            <form action="/exercises/<?=$exerciseId?>" method="POST">
+                <input type="hidden" name="_method" value="PUT"/>
+                <button type="submit"><i class="fa-solid fa-comment text-purple"></i></button>
+            </form>
+        <?php endif; ?>
         <a href="/exercises/<?=$exerciseId?>/fields"><i class="fa-solid fa-pen-to-square text-purple"></i></a>
         <a href="/exercises/<?=$exerciseId?>" data-confirm="Are you sure?"><i class="fa-solid fa-trash text-purple"></i></a>
     </div>
