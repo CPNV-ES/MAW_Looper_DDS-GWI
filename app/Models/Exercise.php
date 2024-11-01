@@ -51,58 +51,48 @@ class Exercise extends Model
         return $this->id ?? false;
     }
 
-    public function getExercises(): array
+    public function getExercises(int $exerciseId = null): Exercise | array
     {
-        $values = $this->db->select($this->table, $this->columns);
+        if ($exerciseId !== null) {
+            $filter = [[
+                'id',
+                '=',
+                $exerciseId
+            ]];
 
-        $exercises = [];
+            $result = $this->db->select($this->table, $this->columns, $filter)[0] ?? null;
 
-        foreach ($values as $value) {
-            $id = $value["id"];
-            $name = $value["name"];
-            $statusId = $value["status_id"];
-
-            $exercise = new Exercise($id, $name, $statusId);
-            //ToDo see best way to deal with limiting data transfer
-            $exercise->numberFields = count($exercise->fields);
-            $exercise->fields = null;
-
-            //ToDo adapt/remove this in refactor (put it maybe it Status class)
-            if ($exercise->statusId == 1) {
-                $exercise->statusTitle = 'Building';
-            } elseif ($exercise->statusId == 2) {
-                $exercise->statusTitle = 'Answering';
-            } elseif ($exercise->statusId == 3) {
-                $exercise->statusTitle = 'Closed';
-            } else {
-                $exercise->statusTitle = 'PlaceHolder';
+            if ($result == null) {
+                throw new \Exception('Exercise not found');
             }
 
-            $exercises[] = $exercise;
+            return new Exercise($result['id'], $result['name'], $result['status_id']);
         }
 
-        return $exercises;
-    }
+        $exercises = $this->db->select($this->table, $this->columns);
 
-    public function getExercise(int $exerciseId = null): Exercise
-    {
-        $filter = [[
-            'id',
-            '=',
-            $exerciseId == null ? $this->id : $exerciseId
-        ]];
+        $list = [];
+        foreach ($exercises as $exercise) {
+            $new_exercise = new Exercise($exercise['id'], $exercise['name'], $exercise['status_id']);
 
-        $result = $this->db->select($this->table, $this->columns, $filter);
+            $new_exercise->numberFields = count($new_exercise->fields);
+            $new_exercise->fields = null;
 
-        if (!isset($result[0])) {
-            throw new \Exception('Exercise not found');
+            //ToDo adapt/remove this in refactor (put it maybe it Status class)
+            if ($new_exercise->statusId == 1) {
+                $new_exercise->statusTitle = 'Building';
+            } elseif ($new_exercise->statusId == 2) {
+                $new_exercise->statusTitle = 'Answering';
+            } elseif ($new_exercise->statusId == 3) {
+                $new_exercise->statusTitle = 'Closed';
+            } else {
+                $new_exercise->statusTitle = 'PlaceHolder';
+            }
+
+            $list[] = $new_exercise;
         }
 
-        $id = $result[0]['id'];
-        $name = $result[0]['name'];
-        $status_id = $result[0]['status_id'];
-
-        return new Exercise($id, $name, $status_id);
+        return $list;
     }
 
     public function alterStatus(int $idExercise): bool

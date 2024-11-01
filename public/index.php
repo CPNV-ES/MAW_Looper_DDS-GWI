@@ -17,7 +17,7 @@ $router->get('/', [$views, 'home']);
 ###################
 
 # "Take an exercise" page
-$router->get('/exercises/answering', [$views, 'takeAnExercise']);
+$router->get('/exercises/answering', [$exercise, 'takeAnExercise']);
 
 # "Create an exercise" page
 $router->get('/exercises/new', [$views, 'createAnExercise']);
@@ -30,9 +30,7 @@ $router->get('/exercises', [$exercise, 'exercisesPage']);
 ###############
 
 # Answer an exercise (new answer)
-$router->get('/exercises/{exerciseId}/fulfillments/new', function ($exerciseId) {
-    echo "Answer an exercise (new answer) (GET)";
-});
+$router->get('/exercises/{exerciseId}/fulfillments/new', [$exercise, 'answerExercisePage']);
 
 # Answer an exercise (edit answer)
 $router->get('/exercises/{exerciseId}/fulfillments/{answerId}/edit', function ($exerciseId, $answerId) {
@@ -76,9 +74,7 @@ $router->delete('/exercises/{exerciseId}', function ($exerciseId) {
 });
 
 # Answer an exercise (new answer)
-$router->post('/exercises/{exerciseId}/fulfillments', function ($exerciseId) {
-    echo "Answer an exercise (new answer) (POST)";
-});
+$router->post('/exercises/{exerciseId}/fulfillments', [$exercise, 'answer']);
 
 # Answer an exercise (edit answer)
 $router->patch('/exercises/{exerciseId}/fulfillments/{answerId}', function ($exerciseId, $answerId) {

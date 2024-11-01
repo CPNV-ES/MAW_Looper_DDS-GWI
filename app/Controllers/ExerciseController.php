@@ -3,12 +3,51 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
+use App\Models\Answer;
 use App\Models\Exercise;
 use App\Models\Field;
-use Couchbase\View;
+use App\Models\Test;
 
 class ExerciseController extends Controller
 {
+    public function takeAnExercise()
+    {
+        $exercises = new Exercise();
+        $exercises = $exercises->getExercises();
+
+        (new Views())->takeAnExercise($exercises);
+    }
+
+    public function answerExercisePage(int $exerciseId)
+    {
+        $exercise = new Exercise();
+        $exercise = $exercise->getExercises($exerciseId);
+
+        if ($exercise->statusId < 2) {
+            header("Location: /");
+            return;
+        }
+
+        $fields = new Field();
+        $fields = $fields->getFields($exerciseId);
+
+        (new Views())->answerExercise($exercise, $fields);
+    }
+
+    public function answer(int $exerciseId)
+    {
+        $timestamp = new \DateTime('now');
+        $test = new Test(null, $timestamp, $exerciseId);
+
+        foreach ($_POST['field'] as $fieldId => $value) {
+            if ($value != '') {
+                $answer = new Answer(null, $value, $test->id, $fieldId);
+            }
+        }
+
+        header('Location: /exercises/' . $exerciseId . '/fulfillments/' . $test->id . '/edit');
+    }
+
     public function exerciseCreation()
     {
         $name = $_POST['exercise']['name'];
@@ -36,7 +75,7 @@ class ExerciseController extends Controller
 
     public function editExercisePage($exerciseId)
     {
-        $exercise = (new Exercise())->getExercise($exerciseId);
+        $exercise = (new Exercise())->getExercises($exerciseId);
 
         if ($exercise->statusId != 1) {
             header('Location: /');
@@ -48,7 +87,7 @@ class ExerciseController extends Controller
 
     public function deleteField($exerciseId, $fieldId)
     {
-        $exercise = (new Exercise())->getExercise($exerciseId);
+        $exercise = (new Exercise())->getExercises($exerciseId);
 
         if ($exercise->statusId != 1) {
             header('Location: /');
@@ -62,7 +101,7 @@ class ExerciseController extends Controller
 
     public function addField($exerciseId)
     {
-        $exercise = (new Exercise())->getExercise($exerciseId);
+        $exercise = (new Exercise())->getExercises($exerciseId);
 
         if ($exercise->statusId != 1) {
             header('Location: /');
@@ -83,7 +122,7 @@ class ExerciseController extends Controller
 
     public function editFieldPage($exerciseId, $fieldId)
     {
-        $exercise = (new Exercise())->getExercise($exerciseId);
+        $exercise = (new Exercise())->getExercises($exerciseId);
 
         if ($exercise->statusId != 1) {
             header('Location: /');
@@ -97,7 +136,7 @@ class ExerciseController extends Controller
 
     public function editField($exerciseId, $fieldId)
     {
-        $exercise = (new Exercise())->getExercise($exerciseId);
+        $exercise = (new Exercise())->getExercises($exerciseId);
 
         if ($exercise->statusId != 1) {
             header('Location: /');
