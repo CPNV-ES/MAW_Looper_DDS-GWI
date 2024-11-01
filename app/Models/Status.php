@@ -8,18 +8,17 @@ use Exception;
 
 class Status extends Model
 {
-    private $database;
     private static $status = [];
 
     //Setup should only be called once to avoid useless db requests
     private function setUp(): void
     {
-        $this->database = new Database();
+        parent::__construct();
 
         $table = 'status';
         $values = ['id', 'title'];
 
-        $responseStatus = $this->database->select($table, $values);
+        $responseStatus = $this->db->select($table, $values);
 
         //Raise error exercise if no status
         if (!$responseStatus) {
