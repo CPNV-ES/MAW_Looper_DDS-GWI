@@ -38,6 +38,7 @@ class TestExercise extends TestCase
 
         $this->assertIsArray($exercises);
         $this->assertObjectHasProperty('numberFields', $exercises[0]);
+        $this->assertObjectHasProperty('statusTitle', $exercises[0]);
 
         //ToDo make an check extracting numberField from the 2 created exercises to check if number match
     }
