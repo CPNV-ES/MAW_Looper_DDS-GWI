@@ -124,19 +124,17 @@ class ExerciseController extends Controller
         (new Views())->manageExercises($exercises);
     }
 
-    public function exerciseStatusAlteration()
+    public function exerciseStatusAlteration($exerciseId)
     {
-        $idExercise = $_POST['exercise']['id'];
-
         //Block if $name is null or isn't a string of a number
-        if (!isset($idExercise) || ctype_digit($idExercise)) {
+        if (!isset($exerciseId) || !ctype_digit($exerciseId)) {
             header('Location: /exercises');
 
             return;
         }
 
         //ToDo deal with thrown Exception (need to to see standard to deal with this)
-        (new Exercise())->alterStatus($idExercise);
+        (new Exercise())->alterStatus($exerciseId);
 
         header('Location: /exercises');
     }
