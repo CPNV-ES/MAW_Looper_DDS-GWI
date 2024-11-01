@@ -23,7 +23,7 @@ $router->get('/exercises/answering', [$views, 'takeAnExercise']);
 $router->get('/exercises/new', [$views, 'createAnExercise']);
 
 # "Manage an exercise" page
-$router->get('/exercises', [$views, 'manageExercises']);
+$router->get('/exercises', [$exercise, 'exercisesPage']);
 
 ###############
 # OTHER PAGES #
@@ -55,7 +55,7 @@ $router->get('/exercises/{exerciseId}/results/{fieldId}', function ($exerciseId,
 });
 
 # Edit an exercise
-$router->get('/exercises/{exerciseId}/fields', [$exercise, 'editExercise']);
+$router->get('/exercises/{exerciseId}/fields', [$exercise, 'editExercisePage']);
 
 # Edit a field
 $router->get('/exercises/{exerciseId}/fields/{fieldId}/edit', [$exercise, 'editFieldPage']);
@@ -67,10 +67,8 @@ $router->get('/exercises/{exerciseId}/fields/{fieldId}/edit', [$exercise, 'editF
 # Create an exercise
 $router->post('/exercises', [$exercise, 'exerciseCreation']);
 
-# Update an exercise (status for example)
-$router->put('/exercises/{exerciseId}', function ($exerciseId) {
-    echo "Update an exercise (status for example) (PUT)";
-});
+# Update an exercise status
+$router->put('/exercises/{exerciseId}', [$exercise, 'exerciseStatusAlteration']);
 
 # Delete an exercise
 $router->delete('/exercises/{exerciseId}', function ($exerciseId) {

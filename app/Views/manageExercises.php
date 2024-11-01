@@ -3,6 +3,19 @@ ob_start();
 
 $headColor = "green";
 
+
+$exercisesBuilding = array_filter($exercises, function ($exercise) {
+    return ($exercise->statusTitle == 'Building');
+});
+
+$exercisesAnswering = array_filter($exercises, function ($exercise) {
+    return ($exercise->statusTitle == 'Answering');
+});
+
+$exercisesClosed = array_filter($exercises, function ($exercise) {
+    return ($exercise->statusTitle == 'Closed');
+});
+
 require_once "components/head.php";
 ?>
 
@@ -14,15 +27,16 @@ require_once "components/head.php";
             <tr>
                 <th>Title</th>
             </tr>
-            <?php for ($i = 0; $i < 4; $i++) : ?>
+            <?php foreach ($exercisesBuilding as $exercise) : ?>
                 <tr>
                     <?php
-                        $title = $i;
-                        $exerciseId = $i;
-                        require "components/manageExercise/cell-building.php"
+                    $title = $exercise->name;
+                    $exerciseId = $exercise->id;
+                    $ready = $exercise->numberFields;
+                    require "components/manageExercise/cell-building.php"
                     ?>
                 </tr>
-            <?php endfor; ?>
+            <?php endforeach; ?>
         </table>
     </div>
     <div class="grow space-y-10 w-full md:w-auto">
@@ -32,15 +46,15 @@ require_once "components/head.php";
             <tr>
                 <th>Title</th>
             </tr>
-            <?php for ($i = 0; $i < 4; $i++) : ?>
+            <?php foreach ($exercisesAnswering as $exercise) : ?>
                 <tr>
                     <?php
-                        $title = $i;
-                        $exerciseId = $i;
+                    $title = $exercise->name;
+                    $exerciseId = $exercise->id;
                         require "components/manageExercise/cell-answering.php"
                     ?>
                 </tr>
-            <?php endfor; ?>
+            <?php endforeach; ?>
         </table>
     </div>
     <div class="grow space-y-10 w-full md:w-auto">
@@ -50,15 +64,15 @@ require_once "components/head.php";
             <tr>
                 <th>Title</th>
             </tr>
-            <?php for ($i = 0; $i < 4; $i++) : ?>
+            <?php foreach ($exercisesClosed as $exercise) : ?>
                 <tr>
                     <?php
-                        $title = $i;
-                        $exerciseId = $i;
+                    $title = $exercise->name;
+                    $exerciseId = $exercise->id;
                         require "components/manageExercise/cell-closed.php"
                     ?>
                 </tr>
-            <?php endfor; ?>
+            <?php endforeach; ?>
         </table>
     </div>
 </div>
