@@ -32,6 +32,7 @@ require_once "components/head.php";
                     <?php
                     $title = $exercise->name;
                     $exerciseId = $exercise->id;
+                    $ready = $exercise->numberFields;
                     require "components/manageExercise/cell-building.php"
                     ?>
                 </tr>
