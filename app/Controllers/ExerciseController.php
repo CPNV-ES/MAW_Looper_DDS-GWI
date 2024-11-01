@@ -117,6 +117,13 @@ class ExerciseController extends Controller
         header('Location: /exercises/' . $exerciseId . '/fields');
     }
 
+    public function exercisesPage()
+    {
+        $exercises = (new Exercise())->getExercises();
+
+        (new Views())->manageExercises($exercises);
+    }
+
     public function exerciseStatusAlteration()
     {
         $idExercise = $_POST['exercise']['id'];

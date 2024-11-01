@@ -23,7 +23,7 @@ $router->get('/exercises/answering', [$views, 'takeAnExercise']);
 $router->get('/exercises/new', [$views, 'createAnExercise']);
 
 # "Manage an exercise" page
-$router->get('/exercises', [$views, 'manageExercises']);
+$router->get('/exercises', [$exercise, 'exercisesPage']);
 
 ###############
 # OTHER PAGES #
