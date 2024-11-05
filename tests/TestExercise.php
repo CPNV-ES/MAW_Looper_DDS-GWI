@@ -115,4 +115,36 @@ class TestExercise extends TestCase
             $this->assertEquals($e->getMessage(), 'Status is not supported for alteration.');
         }
     }
+
+    public function testCantDeleteExercise()
+    {
+        $exerciseName = 'Test Exercise Deletion';
+
+        $id = $this->exercise->create($exerciseName);
+
+        try {
+            $this->exercise->deleteExercise($id);
+
+            //ToDo see how to cleanly do in this kinda case
+            throw new Exception("Unwanted success");
+        } catch (Exception $e) {
+            $this->assertEquals($e->getMessage(), 'Exercise deletion is not allowed');
+        }
+
+    }
+
+    public function testCanDeleteExercise()
+    {
+        $exerciseName = 'Test Exercise Deletion';
+        $fieldName = 'Test Field Deletion';
+
+        $id = $this->exercise->create($exerciseName);
+        $this->field->createField($fieldName, 1, $id);
+        $this->exercise->alterStatus($id);
+        $this->exercise->alterStatus($id);
+
+        $response = $this->exercise->alterStatus($id);
+
+        $this->assertTrue($response);
+    }
 }
