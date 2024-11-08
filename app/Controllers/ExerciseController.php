@@ -23,6 +23,7 @@ class ExerciseController extends Controller
         $exercise = new Exercise();
         $exercise = $exercise->getExercises($exerciseId);
 
+        //ToDo direct != on futur status attribut (object of the corresponding status based on exercise statusId)
         if ($exercise->statusId < 2) {
             header("Location: /");
             return;
