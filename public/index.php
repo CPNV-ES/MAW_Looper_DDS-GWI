@@ -33,9 +33,7 @@ $router->get('/exercises', [$exercise, 'exercisesPage']);
 $router->get('/exercises/{exerciseId}/fulfillments/new', [$exercise, 'answerExercisePage']);
 
 # Answer an exercise (edit answer)
-$router->get('/exercises/{exerciseId}/fulfillments/{answerId}/edit', function ($exerciseId, $answerId) {
-    echo "Answer an exercise (edit answer) (GET)";
-});
+$router->get('/exercises/{exerciseId}/fulfillments/{testId}/edit', [$exercise, 'editAnswerPage']);
 
 # Access 1 exercise result
 $router->get('/exercises/{exerciseId}/fulfillments/{answerId}', function ($exerciseId, $answerId) {
@@ -77,9 +75,7 @@ $router->delete('/exercises/{exerciseId}', function ($exerciseId) {
 $router->post('/exercises/{exerciseId}/fulfillments', [$exercise, 'answer']);
 
 # Answer an exercise (edit answer)
-$router->patch('/exercises/{exerciseId}/fulfillments/{answerId}', function ($exerciseId, $answerId) {
-    echo "Answer an exercise (edit answer) (PATCH)";
-});
+$router->patch('/exercises/{exerciseId}/fulfillments/{testId}', [$exercise, 'editAnswer']);
 
 # Create exercise fields
 $router->post('/exercises/{exerciseId}/fields', [$exercise, 'addField']);

@@ -43,4 +43,9 @@ class Views extends Controller
     {
         require __DIR__ . "/../Views/editField.php";
     }
+
+    public function editAnswer(Exercise $exercise, array $fields, array $answers = null): void
+    {
+        require __DIR__ . "/../Views/editAnswer.php";
+    }
 }

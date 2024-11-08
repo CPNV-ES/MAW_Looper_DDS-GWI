@@ -34,4 +34,18 @@ class TestAnswer extends TestCase
         $this->assertIsObject($answer);
         $this->assertIsString($answer->answer);
     }
+
+    public function testCanUpdateAnswer()
+    {
+        $answer = new Answer();
+        $answer = $answer->getAnswer()[0];
+
+        $old_answer = $answer->answer;
+        $updated_answer = $old_answer . "new";
+
+        $return = $answer->update($updated_answer);
+
+        $this->assertTrue($return);
+        $this->assertEquals($updated_answer, $answer->answer);
+    }
 }
