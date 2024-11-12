@@ -55,7 +55,6 @@ class Status extends Model
             $status = self::$status;
         } else {
             foreach (self::$status as $statusInstance) {
-                print_r($statusInstance);
                 if ($statusInstance->id == $statusId) {
                     $status = $statusInstance;
 
