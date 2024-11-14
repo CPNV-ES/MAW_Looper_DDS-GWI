@@ -30,7 +30,7 @@ class Exercise extends Model
         $this->setValues($values);
     }
 
-    public function create(string $name): int
+    public function create(string $name): int | bool
     {
         $status = Status::getStatusByTitle($this->orderStatus[0]);
 
@@ -43,13 +43,13 @@ class Exercise extends Model
         return $this->id ?? false;
     }
 
-    public function getExercises(int $exerciseId = null): Exercise | array
+    public function getExercises(int $idExercise = null): Exercise | array
     {
-        if ($exerciseId !== null) {
+        if ($idExercise !== null) {
             $filter = [[
                 'id',
                 '=',
-                $exerciseId
+                $idExercise
             ]];
 
             $result = $this->db->select($this->table, $this->columns, $filter)[0] ?? null;
