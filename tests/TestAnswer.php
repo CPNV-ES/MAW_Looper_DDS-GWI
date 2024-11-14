@@ -42,8 +42,16 @@ class TestAnswer extends TestCase
 
         $old_answer = $answer->answer;
         $updated_answer = $old_answer . "new";
+        $values = [
+            "answer" => $updated_answer
+        ];
+        $filters = [
+            [
+                "id", "=", $answer->id
+            ]
+        ];
 
-        $return = $answer->update($updated_answer);
+        $return = $answer->update($values, $filters);
 
         $this->assertTrue($return);
         $this->assertEquals($updated_answer, $answer->answer);
