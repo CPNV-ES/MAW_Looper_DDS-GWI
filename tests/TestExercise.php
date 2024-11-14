@@ -18,11 +18,13 @@ class TestExercise extends TestCase
 
     public function testCanCreateExercise()
     {
-        $name = 'Test Exercise';
+        $name = 'Test Exercise Creation';
 
         $response = $this->exercise->create($name);
 
         $this->assertIsInt($response);
+
+        //ToDo make deletion of exercise after all tests
     }
 
     public function testCanGetExercises()
@@ -34,18 +36,19 @@ class TestExercise extends TestCase
         $exerciseIdWithField = $this->exercise->create($exerciseName);
         $this->field->createField($fieldName, 1, $exerciseIdWithField);
 
+        $exercise = $this->exercise->getExercises($exerciseIdWithField);
         $exercises = $this->exercise->getExercises();
 
-        $this->assertIsArray($exercises);
-        $this->assertObjectHasProperty('numberFields', $exercises[0]);
-        $this->assertObjectHasProperty('statusTitle', $exercises[0]);
+        $this->assertEquals($exerciseName, $exercise->name);
+        $this->isInstanceOf(Exercise::class, $exercise);
 
-        //ToDo make an check extracting numberField from the 2 created exercises to check if number match
+        $this->assertIsArray($exercises);
+        $this->assertContainsOnlyInstancesOf(Exercise::class, $exercises);
     }
 
     public function testCanGetExercise()
     {
-        $exercise = (new Exercise())->getExercise(1);
+        $exercise = (new Exercise())->getExercises(1);
 
         $this->assertequals(Exercise::class, get_class($exercise));
         $this->assertEquals(1, $exercise->id);
@@ -63,9 +66,8 @@ class TestExercise extends TestCase
             //ToDo see how to cleanly do in this kinda case
             throw new Exception("Unwanted success");
         } catch (Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Status change is not allowed');
+            $this->assertEquals('Status change is not allowed', $e->getMessage());
         }
-
     }
 
     public function testCanAlterBuilding()
@@ -75,6 +77,10 @@ class TestExercise extends TestCase
 
         $id = $this->exercise->create($exerciseName);
         $this->field->createField($fieldName, 1, $id);
+
+        $exercise = $this->exercise->getExercises($id);
+
+        $this->assertCount(1, $exercise->fields);
 
         $response = $this->exercise->alterStatus($id);
 
@@ -112,7 +118,52 @@ class TestExercise extends TestCase
             //ToDo see how to cleanly do in this kinda case
             throw new Exception("Unwanted success");
         } catch (Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Status is not supported for alteration.');
+            $this->assertEquals('Status is not supported for alteration.', $e->getMessage());
         }
+    }
+
+    public function testCantDeleteExerciseAnswering()
+    {
+        $exerciseName = 'Test Exercise Deletion';
+        $fieldName = 'Test Field Deletion';
+
+        $id = $this->exercise->create($exerciseName);
+        $this->field->createField($fieldName, 1, $id);
+        $this->exercise->alterStatus($id);
+
+        try {
+            $this->exercise->delete($id);
+
+            //ToDo see how to cleanly do in this kinda case
+            throw new Exception("Unwanted success");
+        } catch (Exception $e) {
+            $this->assertEquals('Status is not supported for deletion.', $e->getMessage());
+        }
+    }
+
+    public function testCanDeleteExerciseBuilding()
+    {
+        $exerciseName = 'Test Exercise Deletion';
+
+        $id = $this->exercise->create($exerciseName);
+
+        $response = $this->exercise->delete($id);
+
+        $this->assertTrue($response);
+    }
+
+    public function testCanDeleteExerciseClosed()
+    {
+        $exerciseName = 'Test Exercise Deletion';
+        $fieldName = 'Test Field Deletion';
+
+        $id = $this->exercise->create($exerciseName);
+        $this->field->createField($fieldName, 1, $id);
+        $this->exercise->alterStatus($id);
+        $this->exercise->alterStatus($id);
+
+        $response = $this->exercise->delete($id);
+
+        $this->assertTrue($response);
     }
 }

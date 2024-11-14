@@ -67,9 +67,7 @@ $router->post('/exercises', [$exercise, 'exerciseCreation']);
 $router->put('/exercises/{exerciseId}', [$exercise, 'exerciseStatusAlteration']);
 
 # Delete an exercise
-$router->delete('/exercises/{exerciseId}', function ($exerciseId) {
-    echo "Delete an exercise (DELETE)";
-});
+$router->delete('/exercises/{exerciseId}', [$exercise, 'exerciseDelete']);
 
 # Answer an exercise (new answer)
 $router->post('/exercises/{exerciseId}/fulfillments', [$exercise, 'answer']);

@@ -5,15 +5,15 @@ $headColor = "green";
 
 
 $exercisesBuilding = array_filter($exercises, function ($exercise) {
-    return ($exercise->statusTitle == 'Building');
+    return ($exercise->status->title == 'Building');
 });
 
 $exercisesAnswering = array_filter($exercises, function ($exercise) {
-    return ($exercise->statusTitle == 'Answering');
+    return ($exercise->status->title == 'Answering');
 });
 
 $exercisesClosed = array_filter($exercises, function ($exercise) {
-    return ($exercise->statusTitle == 'Closed');
+    return ($exercise->status->title == 'Closed');
 });
 
 require_once "components/head.php";
@@ -32,7 +32,7 @@ require_once "components/head.php";
                     <?php
                     $title = $exercise->name;
                     $exerciseId = $exercise->id;
-                    $ready = $exercise->numberFields;
+                    $ready = boolval($exercise->fields);
                     require "components/manageExercise/cell-building.php"
                     ?>
                 </tr>
