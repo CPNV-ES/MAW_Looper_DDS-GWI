@@ -118,7 +118,6 @@ class ExerciseController extends Controller
             return;
         }
 
-
         //ToDo make an 404 error page
         (new Exercise())->delete($exerciseId);
 
