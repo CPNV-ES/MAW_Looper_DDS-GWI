@@ -1,4 +1,4 @@
-[Diagram direct access](https://www.plantuml.com/plantuml/uml/jLRVJzim47xtNt6FgTQYmlOqVeYkBLCbnj3AsCCs8JUvbWpNZco7qHN-zpbEN2vBMtKJGoYK-_7TT-Vlt9mQoxNDvuAPkrHcNFCvn88RqxDMfvFSuYXMSfp-GkWobl7uZiyGUbdsxODAK2mP0u0o0mRSyWatk6HG_NJWLXaBRy4uC3aZzapfjVPaSi7dkCwJ6zHoWozpvNygdJHzhy2WmDX6Zffupcr3h4G-byPPldvlmpGL5hM1O_UVCt6j-QA8oQLrjgupfTAsGKsd1kiMdQ1-jwWItQFbdwH-AXtnPlrxBd8qgvI9KW8UOVWGOsPJ9Gb0dYNSuZQ0WgbCqY9l9yG41JOHTmAX9zLNKc9ScACYzdBmqRkVg2REKXJ9aeuZAKVdK6Kk1F7K3hVfjelCkKl0A_Uv6O4FgEFKu6X3YGxKEoQEe8RWgftWqL6ifBFdiLNwvAIa4AqQEVPLsdN-mUffZ_uC9KofeqMApj3wEYRQ51o6uRWsqw9fyGmfhIgK1COQkSKojiQSKawQL5TbuT6heo6hPdd2cAGGRMzduG0eZM3PgK873DfhloaHtRYcK5UwsasiDhL4IVzDQO5KKsrr0ki5v3Ff75jqWVvXICFg55vaeOtbDZU1sYR_LT5d7UEG17aLcETLMCCYdqzGbxj42Xs--665uUnuCv3-gO8RArhV2w9mSj2Xj8bQuTjhVS2sooJ4a4mkBEgnv-cw2W4-yMzNZSgeH5pIL6yXt0dcvyntTQ_IfDvK2KDQBYizrTzJ-ahZabQlNbpeDvb322ylMmxO9qQXeU99KFjAMgs4GBqC7RjVdmATpZEy5wApF5PuRBMFr1X6JMrbkzH2mrIv0HN-tXwvF1XZKba4Rk1IgnyOMrRzTNsVAvMXPbVLTNAzVzCl-XcaVARv_APozt9xgxGfvfIgcO913yQZy-iUd0q_NVGk1iDn6zwZcawrMZX8UyirV1cT3qRCDLxWTbztzhkTW-x16uOoWO8FEtMVyhdu3G00)
+[Diagram direct access](http://www.plantuml.com/plantuml/duml/jLRVJzj847xtNp6FZYv6WRkd4o124awHE8eQIX_Q2ctiIN3Px5gxQqgQyBztxVM6SHrJgw9zSCty-EQRdMysFjE6APElUA0VKf4nnLOGSwRrq1YLpdE3qrYAMVeTOH046OiVs19Xc6MV_vS9yaqG083BW34pRCuqRWAe_aLmBxM1Vq5RCB4azaoglVPaViLMkC-JQrIYnPVPyj-aIfg-lq0ZnzY4bXf_oUr3B7c-4jfQFdtfmoBb1fM64_kNDJ6bsBg8oOMnje4rfSBqGIuM6kiMbQ0wNrU9zj4hdwH-AYpnPlr7ndFKkvIvb1osC7cACJEf50GWpn9cy3M0Wgb8qYAl4sA271k8tK7yf4PI28mBSrZ4Ne_VbUvdgecB57coeSUHkAEpg2Bdd7XgmsswpJgpRWTuOz-R4VY4AaurJbjAH53lc3Yy6hohDi7ZurWAQyzZ8zNfgQCGxXevAQlqw_ozjQGz_JcKCYME7YcwH5FMqM5Ri3yCoxMP5YwAfq_fLQ4aC5R83BhO6dDAEMbItPM5RQcEXgoQvIbZdqAr_IiMmb0QtjAfGWGQpMsvAI7TkAPGTxhg9bQJ6gAaFwOqJwgfjZg1_G8gC-avzkW2_SOXJQeflCb2QyDChgTjwMx0-aNbRGWsOkPUtcGAaRlJ7MItCVbZwNedaCw9TXlBMT-8NXNjruuEsXDuzRBmGR1rlsy4Wd7ZExOz-40lcVrxtWpik7ls-IZJnAkBoCinU9i5zDhmlROEpnNjlc2qkmzPIDeX0wb0UqIRdaWpx7nzKzGYqTNPFDU_k4PIOUs3g_e4ex_95i9_XhNtx193l-35aw2Ef31ASevgKmKKHCeKYA8N-78jhMLRuGMxcuKQlKQepJL9BJHCkeMly0yEo3LerIAaGM0QhfNyYh49glzjtvTIPgY2csfkjuTtewAVSSgMYgtkAlSmD_TIwUASKhcKC1x2R7fvEuIBoVkhuTLuCkl3VoWN2oNN5jBSCmKVfvVZQM0RBt07VqU7W-XeSFHFW2A1WazmPj_o5Vy1)
 Code for it (use it on [PlantUML website](http://www.plantuml.com/plantuml/uml/)
 ```md
 @startuml
@@ -49,24 +49,28 @@ package App\Model{
         + id : int | null
         + name : string | null
         + statusId : int | null
-        + statusTitle string | null;
         + fields : Field[] | null
-        + numberFields int | null;
+        + status : Status | null
         - table : string
         - columns : string[]
+        - orderStatus : string[]
         + <<constructor>> Exercise(id : int = null, name : string = null, statusId : int = null)
-        + create(name : string) : bool
-        + getExercises() : array
-        + getExercise(exerciseId : int = null) : Exercise
+        + create(name : string) : int | bool
+        + getExercises(exerciseId : int = null) : Exercise | array
         + alterStatus(idExercise: int) : bool
-        - setValues(values : [])
+        + delete(idExercise: int) : bool
+        - setValues(values : []) : void
     }
 
 
     class Status{
+        + id : int | null
+        + title : string | null
         - status : array
+        + <<constructor>> Status(id : int = null, title : string = null)
         - setUp() : void
-        + getStatus() : array
+        + getStatus() : Status | array
+        + getStatusByTitle() : Status
     }
 }
 
