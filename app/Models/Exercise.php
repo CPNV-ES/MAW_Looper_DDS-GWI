@@ -107,6 +107,23 @@ class Exercise extends Model
         return $response;
     }
 
+    public function delete(int $idExercise): bool
+    {
+        $exercise = $this->getExercises($idExercise);
+
+        //Throw error if there isn't a next step for the current status
+        if ($exercise->status->title != end($this->orderStatus)) {
+            throw new Exception("Status is not supported for deletion.");
+        }
+
+        //Fetch exercise based on given id
+        $filterExercise = [['id', '=', $idExercise]];
+
+        $response = $this->db->delete($this->table, $filterExercise);
+
+        return $response;
+    }
+
     private function setValues(array $values): void
     {
         $this->id = isset($values['id']) && $values['id'] != null ? $values['id'] : null;
