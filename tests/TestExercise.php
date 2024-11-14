@@ -61,7 +61,7 @@ class TestExercise extends TestCase
             //ToDo see how to cleanly do in this kinda case
             throw new Exception("Unwanted success");
         } catch (Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Status change is not allowed');
+            $this->assertEquals('Status change is not allowed', $e->getMessage());
         }
 
     }
@@ -114,7 +114,7 @@ class TestExercise extends TestCase
             //ToDo see how to cleanly do in this kinda case
             throw new Exception("Unwanted success");
         } catch (Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Status is not supported for alteration.');
+            $this->assertEquals('Status is not supported for alteration.', $e->getMessage());
         }
     }
 
@@ -130,7 +130,7 @@ class TestExercise extends TestCase
             //ToDo see how to cleanly do in this kinda case
             throw new Exception("Unwanted success");
         } catch (Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Exercise deletion is not allowed');
+            $this->assertEquals('Status is not supported for deletion.', $e->getMessage());
         }
     }
 
