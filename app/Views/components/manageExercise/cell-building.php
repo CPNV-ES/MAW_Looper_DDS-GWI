@@ -10,6 +10,9 @@
             </form>
         <?php endif; ?>
         <a href="/exercises/<?=$exerciseId?>/fields"><i class="fa-solid fa-pen-to-square text-purple"></i></a>
-        <a href="/exercises/<?=$exerciseId?>" data-confirm="Are you sure?"><i class="fa-solid fa-trash text-purple"></i></a>
+        <form action="/exercises/<?=$exerciseId?>" method="POST" onsubmit="return confirm('Are you sure?')">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit"><i class="fa-solid fa-trash text-purple"></i></button>
+        </form>
     </div>
 </td>
