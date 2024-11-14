@@ -111,8 +111,10 @@ class Exercise extends Model
     {
         $exercise = $this->getExercises($idExercise);
 
+        $authorizedOrderStatus = [$this->orderStatus[0], end($this->orderStatus)];
+
         //Throw error if there isn't a next step for the current status
-        if ($exercise->status->title != end($this->orderStatus)) {
+        if (!in_array($exercise->status->title, $authorizedOrderStatus)) {
             throw new Exception("Status is not supported for deletion.");
         }
 
