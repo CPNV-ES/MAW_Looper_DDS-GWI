@@ -73,6 +73,22 @@ class ExerciseController extends Controller
         header('Location: /exercises/' . $exercise->id . '/fields');
     }
 
+    public function exerciseDelete($exerciseId)
+    {
+        //Block if $name is null or an empty string
+        if (!isset($exerciseId) || !ctype_digit($exerciseId)) {
+            header('Location: /exercises');
+
+            return;
+        }
+
+
+        //ToDo make an 404 error page
+        (new Exercise())->delete($exerciseId);
+
+        header('Location: /exercises');
+    }
+
     public function editExercisePage($exerciseId)
     {
         $exercise = (new Exercise())->getExercises($exerciseId);
@@ -172,6 +188,7 @@ class ExerciseController extends Controller
             return;
         }
 
+        //ToDo make an 404 error page
         //ToDo deal with thrown Exception (need to to see standard to deal with this)
         (new Exercise())->alterStatus($exerciseId);
 
