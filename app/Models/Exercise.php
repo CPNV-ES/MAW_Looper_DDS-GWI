@@ -54,6 +54,7 @@ class Exercise extends Model
 
             $result = $this->db->select($this->table, $this->columns, $filter)[0] ?? null;
 
+            //Raise error exercise id has no match
             if ($result == null) {
                 throw new Exception('Exercise not found');
             }
@@ -74,11 +75,6 @@ class Exercise extends Model
     public function alterStatus(int $idExercise): bool
     {
         $exercise = $this->getExercises($idExercise);
-
-        //Raise error exercise id has no match
-        if (!$exercise) {
-            throw new Exception("Exercise not found");
-        }
 
         //Get authorized status
         $authorizedOrderStatus = $this->orderStatus;
