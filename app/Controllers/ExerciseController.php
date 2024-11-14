@@ -23,6 +23,7 @@ class ExerciseController extends Controller
         $exercise = new Exercise();
         $exercise = $exercise->getExercises($exerciseId);
 
+        //ToDo direct != on futur status attribut (object of the corresponding status based on exercise statusId)
         if ($exercise->statusId < 2) {
             header("Location: /");
             return;
@@ -40,12 +41,47 @@ class ExerciseController extends Controller
         $test = new Test(null, $timestamp, $exerciseId);
 
         foreach ($_POST['field'] as $fieldId => $value) {
-            if ($value != '') {
-                $answer = new Answer(null, $value, $test->id, $fieldId);
-            }
+            $answer = new Answer(null, $value, $test->id, $fieldId);
         }
 
         header('Location: /exercises/' . $exerciseId . '/fulfillments/' . $test->id . '/edit');
+    }
+
+    public function editAnswerPage(int $exerciseId, int $testId)
+    {
+        $exercise = new Exercise();
+        $exercise = $exercise->getExercises($exerciseId);
+
+        if ($exercise->statusId < 2) {
+            header("Location: /");
+            return;
+        }
+
+        $fields = new Field();
+        $fields = $fields->getFields($exerciseId);
+
+        $answers = new Answer();
+        $answers = $answers->getByTest($testId);
+
+        (new Views())->editAnswer($exercise, $fields, $answers);
+    }
+
+    public function editAnswer(int $exerciseId, int $testId)
+    {
+        foreach ($_POST['field'] as $fieldId => $value) {
+            $values = [
+                'answer' => $value
+            ];
+            $filters = [
+                ['field_id', '=', $fieldId],
+                ['test_id', '=', $testId]
+            ];
+
+            $answer = new Answer();
+            $answer->update($values, $filters);
+        }
+
+        header('Location: /exercises/' . $exerciseId . '/fulfillments/' . $testId . '/edit');
     }
 
     public function exerciseCreation()
