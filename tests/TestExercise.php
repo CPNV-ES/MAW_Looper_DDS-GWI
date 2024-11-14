@@ -23,6 +23,8 @@ class TestExercise extends TestCase
         $response = $this->exercise->create($name);
 
         $this->assertIsInt($response);
+
+        //ToDo make deletion of exercise after all tests
     }
 
     public function testCanGetExercises()
@@ -63,7 +65,6 @@ class TestExercise extends TestCase
         } catch (Exception $e) {
             $this->assertEquals('Status change is not allowed', $e->getMessage());
         }
-
     }
 
     public function testCanAlterBuilding()
