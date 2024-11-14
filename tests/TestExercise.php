@@ -118,11 +118,14 @@ class TestExercise extends TestCase
         }
     }
 
-    public function testCantDeleteExercise()
+    public function testCantDeleteExerciseAnswering()
     {
         $exerciseName = 'Test Exercise Deletion';
+        $fieldName = 'Test Field Deletion';
 
         $id = $this->exercise->create($exerciseName);
+        $this->field->createField($fieldName, 1, $id);
+        $this->exercise->alterStatus($id);
 
         try {
             $this->exercise->delete($id);
@@ -134,7 +137,18 @@ class TestExercise extends TestCase
         }
     }
 
-    public function testCanDeleteExercise()
+    public function testCanDeleteExerciseBuilding()
+    {
+        $exerciseName = 'Test Exercise Deletion';
+
+        $id = $this->exercise->create($exerciseName);
+
+        $response = $this->exercise->delete($id);
+
+        $this->assertTrue($response);
+    }
+
+    public function testCanDeleteExerciseClosed()
     {
         $exerciseName = 'Test Exercise Deletion';
         $fieldName = 'Test Field Deletion';
