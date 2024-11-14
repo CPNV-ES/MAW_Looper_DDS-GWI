@@ -36,11 +36,14 @@ class TestExercise extends TestCase
         $exerciseIdWithField = $this->exercise->create($exerciseName);
         $this->field->createField($fieldName, 1, $exerciseIdWithField);
 
+        $exercise = $this->exercise->getExercises($exerciseIdWithField);
         $exercises = $this->exercise->getExercises();
+
+        $this->assertEquals($exerciseName, $exercise->name);
+        $this->isInstanceOf(Exercise::class, $exercise);
 
         $this->assertIsArray($exercises);
         $this->assertContainsOnlyInstancesOf(Exercise::class, $exercises);
-        $this->assertEquals($exerciseName, $exercises[0]->name);
     }
 
     public function testCanGetExercise()
