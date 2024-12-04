@@ -1,6 +1,7 @@
 @startuml
 
 skinparam classAttributeIconSize 0
+left to right direction
 
 package App\Core{
     class Model {
@@ -73,6 +74,11 @@ package App\Model{
         + {static} get(filter : []) : Object | bool {redefinition}
     }
     Fulfillment "1" --> "0..*" Exercise
+
+    class Status{
+        - id : int
+        - title : string
+    }
 }
 
 Answer --|> Model
