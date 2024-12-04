@@ -1,0 +1,84 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+
+package App\Core{
+    class Model {
+        + {static} db : Database
+        - {static} table : string | null
+        + {static} get(filter : []) : Object | bool
+        + {static} getAll() : Object[] | bool
+        + {static} insert(values : []) : bool
+        + {static} update(values : [], filters : []) : bool
+        + {static} delete(filter : []) : bool
+        - setValues(values : []) : void
+    }
+
+    class Database {
+        - host : string
+        - port : string
+        - dbName : string
+        - username : string
+        - password : string
+        + select(table : string, columns : [], filter : [] = [], count : int = 0, offset : int = 0, orderBy : [] = []) : []
+        + insert(table : string, values : []) : bool | Exception
+        + update(table : string, values : [], conditions : []) : bool | Exception
+        + delete(table : string, conditions : []) : bool | Exception
+        - dbConnection() : PDO
+    }
+
+    Model "1" --> "1" Database
+}
+
+package App\Model{
+    class Answer{
+        - id : int
+        - answer : string
+        - fulfillment : int | Fulfillment
+        - field : int | Field
+        - {static} table : string {redefinition}
+        + {static} get(filter : []) : Object | bool {redefinition}
+    }
+    Answer "1" --> "0..*" Fulfillment
+    Answer "1" --> "0..*" Field
+
+    class Field{
+        - id : int
+        - title : string
+        - type : int | FieldType
+        - exercise : int | Exercise
+        + {static} get(filter : []) : Object | bool {redefinition}
+    }
+    Field "1" --> "0..*" FieldType
+    Field "1" --> "0..*" Exercise
+
+    class Exercise{
+        - id : int
+        - name : string
+        - status : int | Status
+        + {static} get(filter : []) : Object | bool {redefinition}
+    }
+    Exercise "1" --> "0..*" Status
+
+    class FieldType{
+        - id : int
+        - title : string
+        - {static} table : string {redefinition}
+    }
+
+    class Fulfillment{
+        - id : int
+        - timestamp_test : string
+        - exercise : int | Exercise
+        + {static} get(filter : []) : Object | bool {redefinition}
+    }
+    Fulfillment "1" --> "0..*" Exercise
+}
+
+Answer --|> Model
+Field --|> Model
+Exercise --|> Model
+FieldType --|> Model
+Fulfillment --|> Model
+
+@enduml
