@@ -11,7 +11,7 @@ require_once "components/head.php";
         <p>Bookmark this page, it's yours. You'll be able to come back later to finish.</p>
 
         <form
-            action="/exercises/<?=$exercise->id?>/fulfillments/<?=$answers[array_key_first($answers)]->test?>"
+            action="/exercises/<?=$exercise->id?>/fulfillments/<?=$answers[array_key_first($answers)]->test->id?>"
             method="POST"
             class="space-y-10"
         >
@@ -19,9 +19,9 @@ require_once "components/head.php";
             <?php foreach ($fields as $field) : ?>
                 <div>
                     <label for="<?=$field->id?>"><?=$field->name?></label>
-
                     <?php if ($field->type->title != 'Single line text') : ?>
-                        <textarea name="field[<?=$field->id?>]" id="<?=$field->id?>"><?php
+                        <!-- ToDo replace style with class -->
+                        <textarea style="height: 60px" name="field[<?=$field->id?>]" id="<?=$field->id?>"><?php
                         if ($answers != null && isset($answers[$field->id])) {
                             echo $answers[$field->id]->answer;
                         }

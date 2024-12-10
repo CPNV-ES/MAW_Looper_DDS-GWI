@@ -33,4 +33,12 @@ class TestTest extends TestCase
         $this->assertIsObject($test);
         $this->assertNotNull($test->timestamp);
     }
+
+    public function getTestsByExercise()
+    {
+        $tests = (new Test())->getTestsByExercise(1);
+
+        $this->assertIsArray($tests);
+        $this->assertContainsOnlyInstancesOf(Test::class, $tests);
+    }
 }

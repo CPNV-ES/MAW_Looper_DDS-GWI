@@ -1,4 +1,4 @@
-[Diagram direct access](http://www.plantuml.com/plantuml/duml/jLRVJzj847xtNp6FZYv6WRkd4o124awHE8eQIX_Q2ctiIN3Px5gxQqgQyBztxVM6SHrJgw9zSCty-EQRdMysFjE6APElUA0VKf4nnLOGSwRrq1YLpdE3qrYAMVeTOH046OiVs19Xc6MV_vS9yaqG083BW34pRCuqRWAe_aLmBxM1Vq5RCB4azaoglVPaViLMkC-JQrIYnPVPyj-aIfg-lq0ZnzY4bXf_oUr3B7c-4jfQFdtfmoBb1fM64_kNDJ6bsBg8oOMnje4rfSBqGIuM6kiMbQ0wNrU9zj4hdwH-AYpnPlr7ndFKkvIvb1osC7cACJEf50GWpn9cy3M0Wgb8qYAl4sA271k8tK7yf4PI28mBSrZ4Ne_VbUvdgecB57coeSUHkAEpg2Bdd7XgmsswpJgpRWTuOz-R4VY4AaurJbjAH53lc3Yy6hohDi7ZurWAQyzZ8zNfgQCGxXevAQlqw_ozjQGz_JcKCYME7YcwH5FMqM5Ri3yCoxMP5YwAfq_fLQ4aC5R83BhO6dDAEMbItPM5RQcEXgoQvIbZdqAr_IiMmb0QtjAfGWGQpMsvAI7TkAPGTxhg9bQJ6gAaFwOqJwgfjZg1_G8gC-avzkW2_SOXJQeflCb2QyDChgTjwMx0-aNbRGWsOkPUtcGAaRlJ7MItCVbZwNedaCw9TXlBMT-8NXNjruuEsXDuzRBmGR1rlsy4Wd7ZExOz-40lcVrxtWpik7ls-IZJnAkBoCinU9i5zDhmlROEpnNjlc2qkmzPIDeX0wb0UqIRdaWpx7nzKzGYqTNPFDU_k4PIOUs3g_e4ex_95i9_XhNtx193l-35aw2Ef31ASevgKmKKHCeKYA8N-78jhMLRuGMxcuKQlKQepJL9BJHCkeMly0yEo3LerIAaGM0QhfNyYh49glzjtvTIPgY2csfkjuTtewAVSSgMYgtkAlSmD_TIwUASKhcKC1x2R7fvEuIBoVkhuTLuCkl3VoWN2oNN5jBSCmKVfvVZQM0RBt07VqU7W-XeSFHFW2A1WazmPj_o5Vy1)
+[Diagram direct access](http://www.plantuml.com/plantuml/duml/lLTVRzis47_Nf-337cJCBjnkJqDRr8tJmK2M5OkNFMn3m4XdHwjC2YJLralotNSKTSufb5njo5eKYdL_xdvtzpkQVcETDAxUbOdzKAXA6haJMIcjNJXdYklQmIhJwgBu6yGyIIgPVP1R48kg-kCddKDvcoH2YE0XbjB9QsdXDX7jlvcuqTQ97uJ5O6hBv9KslVBy-bpke4zJMp1gG5TX-a_QvB7kMs6XXCob2Aryy9sAJ9VrJbcK_FxdL6oAqe6nuXM-eKWQ8_VUfbOEPNCK5SfDXTviB7Gb9WVpTjywucFIF5d-GY7mEFz7MTPW3oxNMfVYJfn-pg1oXLOiG5tbqi6n01wfoWllDoeY3WwYYEE3qAHEj5AGUN7gRTylVsxKzvmJxmeeyrlUZZoq3gEgkYoPfZFSMEts5Qf3m3L-ZYtWCvYiiB2AKX3cRiLCGMmWLMU2BrzYPr1UPqwRrwy3XFHGoAicoxIBdwGDxDKZKuwKAoOiwHPSayUcGyRK3CGQkwKR_oINIMlA33C3qa6mxI3daFCOwY6jk6lO4T4gJiyHamldzfTGACTXa6HKXfcmu2wRJKdvnlKGbNWrZgokS8n9_nlJ25JCjYw0VW8rdhoF4xv0_w59f-qKdcIXhPEkjgiXzp1W-y3oeGXeSH4-FCaKPk5C3o77ZOdQCl9CO9LpxaRBsTs8IR2Ermu7JG2E7XPa9Ex2zniB8Kj75MCDP4YKwT_ps73axk7peovoOXUZLq3mD0j8tA1Q1uSNaevVC5xThrNAoc43QODE63S9I6psTh_skPXrl7aBPJ-16TSQsTWUsRmrM4VEpKja4dQERCBRlr-l4TqFTKNTZseWUGITDBs8Uq_5_fGJ0elEnqQ6myAigSF75ONWlhG2t8Ck30IHkyHR_wXqPEBZcgTY4nVh8uRIZjyZQHL3Uhhw7WIqnZ45VUQnkxb3Mxchq629ETVuFdnTeoZiWFfwHEl7IifXYBtCyXtguvMNHzGW1rn_YigEr2-of0_tL7mpY9XmHEIuJ-wxF-nEj87Exxhsbnw_-cCm-hKttFFWcD8zmZzPr1EjdD5bIQSQei3_ZOkOpHx2D-H6oLqRBpbSOBYGokIoiCPS4aZ09Rub_9q7qc6nMWJFdh7xM98aIZiGqehtHly5cKlQlzYPCwqhCCcw_GAvV7vruYjU5d9hvEwgLIzgTwERlLiMUgl5SY4kLcUN2_7kz9VpnVdoz68gVWIzsHYznv3kHXhns-fikKhykD5j_jti-NpsOlxY-mHKBZoUv0r-gdVbFm00)
 Code for it (use it on [PlantUML website](http://www.plantuml.com/plantuml/uml/)
 ```md
 @startuml
@@ -72,6 +72,33 @@ package App\Model{
         + getStatus() : Status | array
         + getStatusByTitle() : Status
     }
+
+    class Answer{
+        + id : int | null
+        + answer : string | null
+        + Test : int | Test | null
+        + Field : int | Field | null
+        - table : string
+        - columns : array
+        + <<constructor>> Answer(id : int = null, answer : string = null, Test : int | Test = null, Field : int | Field = null)
+        + getAnswer(id : int = null) : array | Status | array
+        + getByTest(test_id : int) : array | bool
+        + getByField(idField : int) : array
+        + create(answer : string, test : int | Test, field : int | Field) : Answer | Exception
+        + update(values : array, filters : array) : bool
+    }
+
+    class Test{
+        + id : int | null
+        + timestamp : DateTime | null
+        + exercise : int | Exercise | null
+        - table : string
+        - columns : array
+        + <<constructor>> Answer(id : int = null, timestamp : DateTime = null, exercise : int | Exercise = null)
+        + getTest(id : int = null) : Test | bool
+        + getTestsByExercise(idExercise : int) : array
+        + create(timestamp : DateTime, $exercise : int | Exercise) : Test | Exception
+    }
 }
 
 package App\Core{
@@ -91,6 +118,8 @@ Field --|> Model
 FieldType --|> Model
 Exercise --|> Model
 Status --|> Model
+Answer --|> Model
+Test --|> Model
 
 Exercise --o Field
 Field ..> FieldType

@@ -36,19 +36,13 @@ $router->get('/exercises/{exerciseId}/fulfillments/new', [$exercise, 'answerExer
 $router->get('/exercises/{exerciseId}/fulfillments/{testId}/edit', [$exercise, 'editAnswerPage']);
 
 # Access 1 exercise result
-$router->get('/exercises/{exerciseId}/fulfillments/{answerId}', function ($exerciseId, $answerId) {
-    echo "Access an exercise result (GET)";
-});
+$router->get('/exercises/{exerciseId}/fulfillments/{testId}', [$exercise, 'showAnswerPage']);
 
 # Access all exercise results
-$router->get('/exercises/{exerciseId}/results', function ($exerciseId) {
-    echo "Access exercise results (GET)";
-});
+$router->get('/exercises/{exerciseId}/results', [$exercise, 'showAnswersAllPage']);
 
 # Access exercise results (per question)
-$router->get('/exercises/{exerciseId}/results/{fieldId}', function ($exerciseId, $fieldId) {
-    echo "Access exercise results (GET)";
-});
+$router->get('/exercises/{exerciseId}/results/{fieldId}', [$exercise, 'showAnswersFieldPage']);
 
 # Edit an exercise
 $router->get('/exercises/{exerciseId}/fields', [$exercise, 'editExercisePage']);

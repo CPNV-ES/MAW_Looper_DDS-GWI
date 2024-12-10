@@ -41,7 +41,7 @@ class ExerciseController extends Controller
         $test = new Test(null, $timestamp, $exerciseId);
 
         foreach ($_POST['field'] as $fieldId => $value) {
-            $answer = new Answer(null, $value, $test->id, $fieldId);
+            $answer = (new Answer)->create($value, $test->id, $fieldId);
         }
 
         header('Location: /exercises/' . $exerciseId . '/fulfillments/' . $test->id . '/edit');
@@ -228,5 +228,79 @@ class ExerciseController extends Controller
         (new Exercise())->alterStatus($exerciseId);
 
         header('Location: /exercises');
+    }
+
+    public function showAnswerPage($exerciseId, $testId)
+    {
+        //Block if $name is null or isn't a string of a number
+        if ((!isset($exerciseId) || !ctype_digit($exerciseId)) || (!isset($testId) || !ctype_digit($testId))) {
+            header('Location: /exercises');
+
+            return;
+        }
+
+        $exercise = (new Exercise())->getExercises($exerciseId);
+        $fields = (new Field())->getFields($exerciseId);
+
+        $answers = (new Answer())->getByTest($testId);
+
+//        //ToDo make an 404 error page
+//        //ToDo deal with thrown Exception (need to to see standard to deal with this)
+//        header('Location: /exercises');
+
+        (new Views())->showAnswerExercise($exercise, $fields, $answers);
+    }
+
+    public function showAnswersAllPage($exerciseId)
+    {
+        //Block if $name is null or isn't a string of a number
+        if ((!isset($exerciseId) || !ctype_digit($exerciseId))) {
+            header('Location: /exercises');
+
+            return;
+        }
+
+        $exercise = (new Exercise())->getExercises($exerciseId);
+        $fields = (new Field())->getFields($exerciseId);
+
+        $tests = (new Test())->getTestsByExercise($exerciseId);
+
+        $tableAnswers = [];
+
+        foreach ($tests as $test) {
+            $tableAnswers[$test->id] = (new Answer())->getByTest($test->id);;
+        }
+
+//        //ToDo make an 404 error page
+//        //ToDo deal with thrown Exception (need to to see standard to deal with this)
+
+        (new Views())->showAllAnswerExercise($exercise, $fields, $tests, $tableAnswers);
+    }
+
+    public function showAnswersFieldPage($exerciseId, $fieldId)
+    {
+        //Block if $name is null or isn't a string of a number
+        if ((!isset($exerciseId) || !ctype_digit($exerciseId)) || (!isset($fieldId) || !ctype_digit($fieldId))) {
+            header('Location: /exercises');
+
+            return;
+        }
+
+        $exercise = (new Exercise())->getExercises($exerciseId);
+        $field = (new Field())->getField($fieldId);
+
+        $tests = (new Test())->getTestsByExercise($exerciseId);
+
+        $tableAnswers = [];
+
+        foreach ($tests as $test) {
+            $tableAnswers[$test->id] = (new Answer())->getByTest($test->id);;
+        }
+
+//        //ToDo make an 404 error page
+//        //ToDo deal with thrown Exception (need to to see standard to deal with this)
+//        header('Location: /exercises');
+
+        (new Views())->showAnswerField($exercise, $field, $tests, $tableAnswers);
     }
 }

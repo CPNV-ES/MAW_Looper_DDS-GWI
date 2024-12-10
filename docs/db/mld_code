@@ -31,7 +31,7 @@ class fields {
 }
 class tests {
     id Int
-    timestamp_test Date
+    timestamp_test Datetime
     exercise_id Int
     pk(id)
     fk(exercise_id)

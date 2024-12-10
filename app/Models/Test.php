@@ -49,6 +49,29 @@ class Test extends Model
         return false;
     }
 
+    public function getTestsByExercise(int $idExercise): array
+    {
+        $filter = [
+            ['exercise_id', '=', $idExercise],
+        ];
+
+        $tests = $this->db->select($this->table, $this->columns, $filter) ?? null;
+
+        $testList = [];
+
+        foreach ($tests as $test) {
+            //ToDo refactor the constructor to allow to make instance directly without calling functions in constructor
+            $newTest = new Test();
+            $newTest->id = $test['id'];
+            $newTest->timestamp = new DateTime($test['timestamp_test']);
+            $newTest->exercise = (new Exercise())->getExercises($test['exercise_id']);
+
+            $testList[] = $newTest;
+        }
+
+        return $testList;
+    }
+
     public function create(\DateTime $timestamp, int | Exercise $exercise): Test | \Exception
     {
         $values = [

@@ -20,7 +20,7 @@ class TestAnswer extends TestCase
 
     public function testCanGetAnswerViaConstructor()
     {
-        $answer = new Answer(1);
+        $answer = (new Answer())->getAnswer(1);
 
         $this->assertIsObject($answer);
         $this->assertIsString($answer->answer);
@@ -55,5 +55,23 @@ class TestAnswer extends TestCase
 
         $this->assertTrue($return);
         $this->assertEquals($updated_answer, $answer->answer);
+    }
+
+    public function testCanGetAnswerByTest()
+    {
+        $answer = new Answer();
+        $answers = $answer->getByTest(1);
+
+        $this->assertIsArray($answers);
+        $this->assertContainsOnlyInstancesOf(Answer::class, $answers);
+    }
+
+    public function testCanGetAnswerByField()
+    {
+        $answer = new Answer();
+        $answers = $answer->getByField(1);
+
+        $this->assertIsArray($answers);
+        $this->assertContainsOnlyInstancesOf(Answer::class, $answers);
     }
 }
