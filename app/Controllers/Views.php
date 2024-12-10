@@ -48,4 +48,19 @@ class Views extends Controller
     {
         require __DIR__ . "/../Views/editAnswer.php";
     }
+
+    public function showAnswerExercise(Exercise $exercise, array $fields, array $answers): void
+    {
+        require __DIR__ . "/../Views/showAnswerExercise.php";
+    }
+
+    public function showAllAnswerExercise(Exercise $exercise, array $fields, array $tests, array $tableAnswers): void
+    {
+        require __DIR__ . "/../Views/showAllAnswerExercise.php";
+    }
+
+    public function showAnswerField(Exercise $exercise, Field $field, array $tests, array $tableAnswers): void
+    {
+        require __DIR__ . "/../Views/showAnswerField.php";
+    }
 }
