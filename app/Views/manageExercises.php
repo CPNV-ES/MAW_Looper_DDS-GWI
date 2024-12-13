@@ -32,7 +32,7 @@ require_once "components/head.php";
                     <?php
                     $title = $exercise->name;
                     $exerciseId = $exercise->id;
-                    $ready = boolval($exercise->fields);
+                    $ready = $exercise->count_fields > 0;
                     require "components/manageExercise/cell-building.php"
                     ?>
                 </tr>
