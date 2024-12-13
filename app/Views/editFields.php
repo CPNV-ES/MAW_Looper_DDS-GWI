@@ -17,7 +17,7 @@ require_once "components/head.php";
                 <th>Value kind</th>
                 <th></th>
             </tr>
-            <?php foreach ($exercise->fields as $field) : ?>
+            <?php foreach ($fields as $field) : ?>
                 <tr>
                     <?php
                         $label = $field->name;
@@ -29,7 +29,7 @@ require_once "components/head.php";
             <?php endforeach; ?>
         </table>
         <!-- ToDo remove else once figured out how to fix onsubmit for php -->
-        <?php if ($exercise->fields): ?>
+        <?php if (isset($fields) && count($fields) > 0): ?>
             <form action="/exercises/<?=$exercise->id?>" method="POST">
                 <input type="hidden" name="_method" value="PUT"/>
                 <button class="button bg-purple" type="submit">
