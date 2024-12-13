@@ -22,18 +22,10 @@ class Answer extends Model
     ) {
         parent::__construct();
 
-        if ($id != null) {
-            $this->getAnswer($id);
-            return;
-        }
-
+        $this->id = $id;
         $this->answer = $answer;
         $this->test = $test;
         $this->field = $field;
-
-        if ($field != null && $test != null) {
-            $this->create($answer, $test, $field);
-        }
     }
 
     public function getAnswer(int $id = null): Answer | array | false
@@ -82,7 +74,10 @@ class Answer extends Model
             $answers_list = [];
 
             foreach ($answers as $answer) {
-                $new_answer = new Answer($answer['id'], $answer['answer'], $answer['test_id'], $answer['field_id']);
+                $test = (new Test())->getTest($answer['test_id']);
+                $field = (new Field())->getField($answer['field_id']);
+
+                $new_answer = new Answer($answer['id'], $answer['answer'], $test, $field);
 
                 $answers_list[$answer['field_id']] = $new_answer;
             }
@@ -91,6 +86,25 @@ class Answer extends Model
         }
 
         return false;
+    }
+
+    public function getByField(int $idField): array
+    {
+        $filter = [
+            ['field_id', '=', $idField],
+        ];
+
+        $answers = $this->db->select($this->table, $this->columns, $filter);
+
+        foreach ($answers as $answer) {
+            $test = (new Test())->getTest($answer['test_id']);
+            $field = (new Field())->getField($answer['field_id']);
+            $new_answer = new Answer($answer['id'], $answer['answer'], $test, $field);
+
+            $answers_list[$answer['test_id']] = $new_answer;
+        }
+
+        return $answers_list;
     }
 
     public function create(string $answer, int | Test $test, int | Field $field): Answer | \Exception
