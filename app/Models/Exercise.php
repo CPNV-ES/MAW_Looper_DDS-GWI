@@ -7,131 +7,61 @@ use Exception;
 
 class Exercise extends Model
 {
-    public int | null $id;
-    public string | null $name;
-    public int | null $statusId;
-    public array | null $fields;
-    public Status | null $status;
-    private string $table = 'exercises';
-    private array $columns = ['id', 'name', 'status_id'];
-    //Status update order
-    private array $orderStatus = ['Building', 'Answering', 'Closed'];
+    public int $id;
+    public string $name;
+    public Status | int $status;
+    public int $count_fields;
 
-    public function __construct(int $id = null, string $name = null, int $statusId = null)
+    public static function get(array $filter): Model|bool
     {
-        parent::__construct();
+        $exercise = parent::get($filter);
 
-        $values = [
-            'id' => $id,
-            'name' => $name,
-            'status_id' => $statusId,
-        ];
+        $filter = [['id', '=', $exercise->status]];
+        $exercise->status = Status::get($filter);
 
-        $this->setValues($values);
+        $filter = [['exercise_id', '=', $exercise->id]];
+        $exercise->count_fields = Field::get($filter) ? count((Field::get($filter))) : 0;
+
+        return $exercise;
     }
 
-    public function create(string $name): int | bool
+    public static function getAll(): array|bool
     {
-        $status = Status::getStatusByTitle($this->orderStatus[0]);
+        $exercises = parent::getAll();
 
-        $values = ['name' => $name, 'status_id' => $status->id];
+        if (empty($exercises)) {
+            return false;
+        }
 
-        $response = $this->db->insert($this->table, $values);
+        foreach ($exercises as $key => $exercise) {
+            $filter = [['id', '=', $exercise->status]];
+            $exercise->status = Status::get($filter);
 
-        $this->id = is_string($response) ? $response : null;
+            $filter = [['exercise_id', '=', $exercise->id]];
+            $exercise->count_fields = Field::get($filter) ? count((Field::get($filter))) : 0;
 
-        return $this->id ?? false;
+            $exercises[$key] = $exercise;
+        }
+
+        return $exercises;
     }
 
-    public function getExercises(int $idExercise = null): Exercise | array
+    public static function insert(array $values): string|bool
     {
-        if ($idExercise !== null) {
-            $filter = [[
-                'id',
-                '=',
-                $idExercise
-            ]];
+        $filter = [['title', '=', 'Building']];
+        $values['status_id'] = (Status::get($filter))->id;
 
-            $result = $this->db->select($this->table, $this->columns, $filter)[0] ?? null;
-
-            //Raise error exercise id has no match
-            if ($result == null) {
-                throw new Exception('Exercise not found');
-            }
-
-            return new Exercise($result['id'], $result['name'], $result['status_id']);
-        }
-
-        $exercises = $this->db->select($this->table, $this->columns);
-
-        $list = [];
-        foreach ($exercises as $exercise) {
-            $list[] = new Exercise($exercise['id'], $exercise['name'], $exercise['status_id']);
-        }
-
-        return $list;
+        return parent::insert($values);
     }
 
-    public function alterStatus(int $idExercise): bool
+    public static function delete(array $filters): bool
     {
-        $exercise = $this->getExercises($idExercise);
+        $exercise = self::get($filters);
 
-        //Get authorized status
-        $authorizedOrderStatus = $this->orderStatus;
-        array_pop($authorizedOrderStatus);
-
-        //Throw error if there isn't a next step for the current status
-        if (!in_array($exercise->status->title, $authorizedOrderStatus)) {
-            throw new Exception("Status is not supported for alteration.");
+        if (is_bool(array_search($exercise->status->title, ['Building', 'Closed']))) {
+            return false;
         }
 
-        //Get the next status following the order of title in $orderStatus
-        $statusNextTitle = $this->orderStatus[array_search($exercise->status->title, $this->orderStatus) + 1];
-
-        $statusNext = Status::getStatusByTitle($statusNextTitle);
-
-        //Check that exercise has at least one field before allowing status change (Building -> Answering)
-        if ($statusNext->title == $this->orderStatus[1]) {
-            //Raise error no matching entry (FK) in fields for chosen exercise
-            if (!$exercise->fields) {
-                throw new Exception("Status change is not allowed");
-            }
-        }
-
-        //Fetch exercise based on given id
-        $valuesUpdate = ['status_id' => $statusNext->id];
-        $filterExercise = [['id', '=', $idExercise]];
-
-        $response = $this->db->update($this->table, $valuesUpdate, $filterExercise);
-
-        return $response;
-    }
-
-    public function delete(int $idExercise): bool
-    {
-        $exercise = $this->getExercises($idExercise);
-
-        $authorizedOrderStatus = [$this->orderStatus[0], end($this->orderStatus)];
-
-        //Throw error if there isn't a next step for the current status
-        if (!in_array($exercise->status->title, $authorizedOrderStatus)) {
-            throw new Exception("Status is not supported for deletion.");
-        }
-
-        //Fetch exercise based on given id
-        $filterExercise = [['id', '=', $idExercise]];
-
-        $response = $this->db->delete($this->table, $filterExercise);
-
-        return $response;
-    }
-
-    private function setValues(array $values): void
-    {
-        $this->id = isset($values['id']) && $values['id'] != null ? $values['id'] : null;
-        $this->name = isset($values['name']) && $values['name'] != null ? $values['name'] : null;
-        $this->statusId = isset($values['status_id']) && $values['status_id'] != null ? $values['status_id'] : null;
-        $this->fields = $this->id != null ? (new Field())->getFields($this->id) : null;
-        $this->status = $this->id != null ? (new Status())->getStatus($this->statusId) : null;
+        return parent::delete($filters);
     }
 }
