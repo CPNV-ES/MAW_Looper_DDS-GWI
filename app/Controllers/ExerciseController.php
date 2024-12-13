@@ -6,67 +6,88 @@ use App\Core\Controller;
 use App\Models\Answer;
 use App\Models\Exercise;
 use App\Models\Field;
+use App\Models\Fulfillment;
 use App\Models\Test;
 
 class ExerciseController extends Controller
 {
     public function takeAnExercise()
     {
-        $exercises = new Exercise();
-        $exercises = $exercises->getExercises();
+        $exercises = Exercise::getAll();
 
-        (new Views())->takeAnExercise($exercises);
+        if (is_bool($exercises)) {
+            $exercises = [];
+        }
+
+        require __DIR__ . "/../Views/takeAnExercise.php";
     }
 
     public function answerExercisePage(int $exerciseId)
     {
-        $exercise = new Exercise();
-        $exercise = $exercise->getExercises($exerciseId);
+        $filter = [['id', '=', $exerciseId]];
+        $exercise = Exercise::get($filter);
 
-        //ToDo direct != on futur status attribut (object of the corresponding status based on exercise statusId)
-        if ($exercise->statusId < 2) {
+        if ($exercise->status->id != 2) {
             header("Location: /");
             return;
         }
 
-        $fields = new Field();
-        $fields = $fields->getFields($exerciseId);
+        $filter = [['exercise_id', '=', $exercise->id]];
+        $fields = Field::get($filter);
 
-        (new Views())->answerExercise($exercise, $fields);
+        require __DIR__ . "/../Views/answerExercise.php";
     }
 
     public function answer(int $exerciseId)
     {
-        $timestamp = new \DateTime('now');
-        $test = new Test(null, $timestamp, $exerciseId);
+        $timestamp = (new \DateTime('now'))->format('Y-m-d H:i:s');
+        $values = [
+            'timestamp_test' => $timestamp,
+            'exercise_id' => $exerciseId,
+        ];
+        $fulfillment = Fulfillment::insert($values);
 
         foreach ($_POST['field'] as $fieldId => $value) {
-            $answer = new Answer(null, $value, $test->id, $fieldId);
+            $values = [
+                'answer' => $value,
+                'fulfillment_id' => (int)$fulfillment,
+                'field_id' => $fieldId
+            ];
+            $answer = Answer::insert($values);
         }
 
-        header('Location: /exercises/' . $exerciseId . '/fulfillments/' . $test->id . '/edit');
+        header('Location: /exercises/' . $exerciseId . '/fulfillments/' . (int)$fulfillment . '/edit');
     }
 
-    public function editAnswerPage(int $exerciseId, int $testId)
+    public function editAnswerPage(int $exerciseId, int $fulfillmentId)
     {
-        $exercise = new Exercise();
-        $exercise = $exercise->getExercises($exerciseId);
+        $filter = [['id', '=', $exerciseId]];
+        $exercise = Exercise::get($filter);
 
-        if ($exercise->statusId < 2) {
+        if ($exercise->status->id != 2) {
             header("Location: /");
             return;
         }
 
-        $fields = new Field();
-        $fields = $fields->getFields($exerciseId);
+        $filter = [['exercise_id', '=', $exerciseId]];
+        $fields = Field::get($filter);
 
-        $answers = new Answer();
-        $answers = $answers->getByTest($testId);
+        $filter = [['fulfillment_id', '=', $fulfillmentId]];
+        $answers = Answer::get($filter);
 
-        (new Views())->editAnswer($exercise, $fields, $answers);
+        $fields_ids = array_map(
+            function ($field) {
+                return $field->id;
+            },
+            $fields
+        );
+
+        $answers = array_combine($fields_ids, $answers);
+
+        require __DIR__ . "/../Views/editAnswer.php";
     }
 
-    public function editAnswer(int $exerciseId, int $testId)
+    public function editAnswer(int $exerciseId, int $fulfillmentId)
     {
         foreach ($_POST['field'] as $fieldId => $value) {
             $values = [
@@ -74,21 +95,19 @@ class ExerciseController extends Controller
             ];
             $filters = [
                 ['field_id', '=', $fieldId],
-                ['test_id', '=', $testId]
+                ['fulfillment_id', '=', $fulfillmentId]
             ];
 
-            $answer = new Answer();
-            $answer->update($values, $filters);
+            Answer::update($values, $filters);
         }
 
-        header('Location: /exercises/' . $exerciseId . '/fulfillments/' . $testId . '/edit');
+        header('Location: /exercises/' . $exerciseId . '/fulfillments/' . $fulfillmentId . '/edit');
     }
 
     public function exerciseCreation()
     {
         $name = $_POST['exercise']['name'];
 
-        # ToDo check if want to put empty string check here or in Model.
         //Block if $name is null or an empty string
         if (!isset($name) || $name == '') {
             header('Location: /exercises/new');
@@ -96,9 +115,8 @@ class ExerciseController extends Controller
             return;
         }
 
-        $exercise = new Exercise();
-
-        $response = $exercise->create($name);
+        $values = ["name" => $name];
+        $response = Exercise::insert($values);
 
         if (!$response) {
             header('Location: /exercises/new');
@@ -106,7 +124,7 @@ class ExerciseController extends Controller
             return;
         }
 
-        header('Location: /exercises/' . $exercise->id . '/fields');
+        header('Location: /exercises/' . $response . '/fields');
     }
 
     public function exerciseDelete($exerciseId)
@@ -119,42 +137,54 @@ class ExerciseController extends Controller
         }
 
         //ToDo make an 404 error page
-        (new Exercise())->delete($exerciseId);
+        $filter = [['id', '=', $exerciseId]];
+        Exercise::delete($filter);
 
         header('Location: /exercises');
     }
 
     public function editExercisePage($exerciseId)
     {
-        $exercise = (new Exercise())->getExercises($exerciseId);
+        $filter = [['id', '=', $exerciseId]];
+        $exercise = Exercise::get($filter);
 
-        if ($exercise->statusId != 1) {
+        if ($exercise->status->id != 1) {
             header('Location: /');
             return;
         }
 
-        (new Views())->editFields($exercise);
+        $filter = [['exercise_id', '=', $exerciseId]];
+        $fields = Field::get($filter);
+
+        if (is_bool($fields)) {
+            $fields = [];
+        }
+
+        require __DIR__ . '/../Views/editFields.php';
     }
 
     public function deleteField($exerciseId, $fieldId)
     {
-        $exercise = (new Exercise())->getExercises($exerciseId);
+        $filter = [['id', '=', $exerciseId]];
+        $exercise = Exercise::get($filter);
 
-        if ($exercise->statusId != 1) {
+        if ($exercise->status->id != 1) {
             header('Location: /');
             return;
         }
 
-        $delete = (new Field())->deleteField($fieldId);
+        $filter = [['id', '=', $fieldId]];
+        $delete = Field::delete($filter);
 
         header('Location: /exercises/' . $exerciseId . '/fields');
     }
 
     public function addField($exerciseId)
     {
-        $exercise = (new Exercise())->getExercises($exerciseId);
+        $filter = [['id', '=', $exerciseId]];
+        $exercise = Exercise::get($filter);
 
-        if ($exercise->statusId != 1) {
+        if ($exercise->status->id != 1) {
             header('Location: /');
             return;
         }
@@ -163,33 +193,39 @@ class ExerciseController extends Controller
             header('Location: /exercises/' . $exerciseId . '/fields');
         }
 
-        $name = $_POST['field']['label'];
-        $typeId = $_POST['field']['value_kind'];
+        $values = [
+            'name' => $_POST['field']['label'],
+            'type_id' => $_POST['field']['value_kind'],
+            'exercise_id' => $exerciseId
+        ];
 
-        (new Field())->createField($name, $typeId, $exerciseId);
+        Field::insert($values);
 
         header('Location: /exercises/' . $exerciseId . '/fields');
     }
 
     public function editFieldPage($exerciseId, $fieldId)
     {
-        $exercise = (new Exercise())->getExercises($exerciseId);
+        $filter = [['id', '=', $exerciseId]];
+        $exercise = Exercise::get($filter);
 
-        if ($exercise->statusId != 1) {
+        if ($exercise->status->id != 1) {
             header('Location: /');
             return;
         }
 
-        $field = (new Field())->getField($fieldId);
+        $filter = [['id', '=', $fieldId]];
+        $field = (Field::get($filter))[0];
 
-        (new Views())->editField($exercise, $field);
+        require __DIR__ . "/../Views/editField.php";
     }
 
     public function editField($exerciseId, $fieldId)
     {
-        $exercise = (new Exercise())->getExercises($exerciseId);
+        $filter = [['id', '=', $exerciseId]];
+        $exercise = Exercise::get($filter);
 
-        if ($exercise->statusId != 1) {
+        if ($exercise->status->id != 1) {
             header('Location: /');
             return;
         }
@@ -198,20 +234,26 @@ class ExerciseController extends Controller
             header('Location: /exercises/' . $exerciseId . '/fields');
         }
 
-        $name = $_POST['field']['label'];
-        $typeId = $_POST['field']['value_kind'];
+        $values = [
+            'name' => $_POST['field']['label'],
+            'type_id' => $_POST['field']['value_kind']
+        ];
+        $filter = [['id', '=', $fieldId]];
 
-        $field = (new Field())->getField($fieldId);
-        $field->updateField($name, $typeId, $exerciseId);
+        Field::update($values, $filter);
 
         header('Location: /exercises/' . $exerciseId . '/fields');
     }
 
     public function exercisesPage()
     {
-        $exercises = (new Exercise())->getExercises();
+        $exercises = Exercise::getAll();
 
-        (new Views())->manageExercises($exercises);
+        if (is_bool($exercises)) {
+            $exercises = [];
+        }
+
+        require __DIR__ . "/../Views/manageExercises.php";
     }
 
     public function exerciseStatusAlteration($exerciseId)
@@ -223,9 +265,15 @@ class ExerciseController extends Controller
             return;
         }
 
-        //ToDo make an 404 error page
-        //ToDo deal with thrown Exception (need to to see standard to deal with this)
-        (new Exercise())->alterStatus($exerciseId);
+        $filter = [['id', '=', $exerciseId]];
+        $exercise = Exercise::get($filter);
+
+        if ($exercise->status->id == 1 || $exercise->status->id == 2) {
+            $values = [
+                'status_id' => $exercise->status->id + 1
+            ];
+            Exercise::update($values, $filter);
+        }
 
         header('Location: /exercises');
     }
