@@ -1,16 +1,20 @@
 <?php
 
 use App\Core\Router;
-use App\Controllers\Views;
 use App\Controllers\ExerciseController;
+use App\Models\Database;
+use App\Core\Model;
 
 require_once __DIR__ . "/../vendor/autoload.php";
 
 $router = new Router();
-$views = new Views();
 $exercise = new ExerciseController();
 
-$router->get('/', [$views, 'home']);
+Model::$db = new Database();
+
+$router->get('/', function () {
+    require_once __DIR__ . "/../app/Views/home.php";
+});
 
 ###################
 # PRINCIPAL PAGES #
@@ -20,7 +24,9 @@ $router->get('/', [$views, 'home']);
 $router->get('/exercises/answering', [$exercise, 'takeAnExercise']);
 
 # "Create an exercise" page
-$router->get('/exercises/new', [$views, 'createAnExercise']);
+$router->get('/exercises/new', function () {
+    require_once __DIR__ . "/../app/Views/createAnExercise.php";
+});
 
 # "Manage an exercise" page
 $router->get('/exercises', [$exercise, 'exercisesPage']);
@@ -33,7 +39,7 @@ $router->get('/exercises', [$exercise, 'exercisesPage']);
 $router->get('/exercises/{exerciseId}/fulfillments/new', [$exercise, 'answerExercisePage']);
 
 # Answer an exercise (edit answer)
-$router->get('/exercises/{exerciseId}/fulfillments/{testId}/edit', [$exercise, 'editAnswerPage']);
+$router->get('/exercises/{exerciseId}/fulfillments/{fulfillmentId}/edit', [$exercise, 'editAnswerPage']);
 
 # Access 1 exercise result
 $router->get('/exercises/{exerciseId}/fulfillments/{answerId}', function ($exerciseId, $answerId) {
@@ -73,7 +79,7 @@ $router->delete('/exercises/{exerciseId}', [$exercise, 'exerciseDelete']);
 $router->post('/exercises/{exerciseId}/fulfillments', [$exercise, 'answer']);
 
 # Answer an exercise (edit answer)
-$router->patch('/exercises/{exerciseId}/fulfillments/{testId}', [$exercise, 'editAnswer']);
+$router->patch('/exercises/{exerciseId}/fulfillments/{fulfillmentId}', [$exercise, 'editAnswer']);
 
 # Create exercise fields
 $router->post('/exercises/{exerciseId}/fields', [$exercise, 'addField']);
