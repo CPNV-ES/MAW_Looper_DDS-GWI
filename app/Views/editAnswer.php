@@ -11,7 +11,7 @@ require_once "components/head.php";
         <p>Bookmark this page, it's yours. You'll be able to come back later to finish.</p>
 
         <form
-            action="/exercises/<?=$exercise->id?>/fulfillments/<?=$answers[array_key_first($answers)]->test?>"
+            action="/exercises/<?=$exercise->id?>/fulfillments/<?=$answers[array_key_first($answers)]->fulfillment->id?>"
             method="POST"
             class="space-y-10"
         >
