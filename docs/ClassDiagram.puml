@@ -6,12 +6,12 @@ left to right direction
 package App\Core{
     class Model {
         + {static} db : Database
-        - {static} table : string | null
-        + {static} get(filter : []) : Object | bool
-        + {static} getAll() : Object[] | bool
-        + {static} insert(values : []) : bool
+        + {static} get(filter : []) : Model | bool | Model[]
+        + {static} getAll() : Model[] | bool
+        + {static} insert(values : []) : string | bool
         + {static} update(values : [], filters : []) : bool
         + {static} delete(filter : []) : bool
+        + {static} table() : string | null
         - setValues(values : []) : void
     }
 
@@ -33,45 +33,51 @@ package App\Core{
 
 package App\Model{
     class Answer{
-        - id : int
-        - answer : string
-        - fulfillment : int | Fulfillment
-        - field : int | Field
-        - {static} table : string {redefinition}
-        + {static} get(filter : []) : Object | bool {redefinition}
+        + id : int
+        + answer : string
+        + fulfillment : int | Fulfillment
+        + field : int | Field
+        + {static} get(filter : []) : Model | bool | Model[] {redefinition}
+        + {static} table() : string | null  {redefinition}
     }
     Answer "1" --> "0..*" Fulfillment
     Answer "1" --> "0..*" Field
 
     class Field{
-        - id : int
-        - title : string
-        - type : int | FieldType
-        - exercise : int | Exercise
-        + {static} get(filter : []) : Object | bool {redefinition}
+        + id : int
+        + title : string
+        + type : int | FieldType
+        + exercise : int | Exercise
+        + {static} get(filter : []) : Model | bool | Model[] {redefinition}
+        + {static} getAll() : Model[] | bool {redefinition}
     }
     Field "1" --> "0..*" FieldType
     Field "1" --> "0..*" Exercise
 
     class Exercise{
-        - id : int
-        - name : string
-        - status : int | Status
-        + {static} get(filter : []) : Object | bool {redefinition}
+        + id : int
+        + name : string
+        + status : int | Status
+        + count_fields : int
+        + {static} get(filter : []) : Model | bool {redefinition}
+        + {static} getAll() : Model[] | bool {redefinition}
+        + {static} insert() : string | bool {redefinition}
+        + {static} delete() : bool {redefinition}
     }
     Exercise "1" --> "0..*" Status
 
     class FieldType{
         - id : int
         - title : string
-        - {static} table : string {redefinition}
+        + {static} table() : string | null {redefinition}
     }
 
     class Fulfillment{
         - id : int
         - timestamp_test : string
         - exercise : int | Exercise
-        + {static} get(filter : []) : Object | bool {redefinition}
+        + {static} get(filter : []) : Model | bool {redefinition}
+        + {static} getAll() : Model[] | bool {redefinition}
     }
     Fulfillment "1" --> "0..*" Exercise
 
