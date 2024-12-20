@@ -4,7 +4,7 @@ ob_start();
 $headColor = "orange";
 $headTitle = "New exercise";
 
-require_once "components/head.php";
+require_once __DIR__ . "/../components/head.php";
 ?>
 
 <div class="content max-w-[112rem] flex flex-col mx-auto space-y-12">
@@ -20,4 +20,4 @@ require_once "components/head.php";
 
 <?php
 $pageContent = ob_get_clean();
-require_once "gabarit.php";
+require_once __DIR__ . "/../gabarit.php";

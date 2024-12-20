@@ -4,7 +4,7 @@ ob_start();
 $headColor = "orange";
 $headTitle = "Exercise : <a href=\"\" class=\"font-bold\">" . $exercise->name . "</a>";
 
-require_once "components/head.php";
+require_once __DIR__ . "/../components/head.php";
 ?>
 
 <div class="editFields max-w-[112rem] flex mx-auto space-y-10 md:space-x-10 md:space-y-0 flex-wrap">
@@ -23,7 +23,7 @@ require_once "components/head.php";
                         $label = $field->name;
                         $valueKind = $field->type->title;
                         $fieldId = $field->id;
-                        require "components/editFields/row-table.php"
+                    require __DIR__ . "/../components/editFields/row-table.php"
                     ?>
                 </tr>
             <?php endforeach; ?>
@@ -63,4 +63,4 @@ require_once "components/head.php";
 
 <?php
 $pageContent = ob_get_clean();
-require_once "gabarit.php";
+require_once __DIR__ . "/../gabarit.php";

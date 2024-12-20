@@ -3,7 +3,7 @@ ob_start();
 
 $headColor = "purple";
 
-require_once "components/head.php";
+require_once __DIR__ . "/../components/head.php";
 ?>
 
 <div class="list space-y-4 max-w-[112rem] flex flex-col mx-auto my-4">
@@ -16,7 +16,7 @@ require_once "components/head.php";
         if ($exercise->status->id > 1) {
             $title = $exercise->name;
             $exerciseId = $exercise->id;
-            require "components/exercise.php";
+            require __DIR__ . "/../components/exercise.php";
         }
         ?>
     <?php endforeach; ?>
@@ -24,4 +24,4 @@ require_once "components/head.php";
 
 <?php
 $pageContent = ob_get_clean();
-require_once "gabarit.php";
+require_once __DIR__ . "/../gabarit.php";
