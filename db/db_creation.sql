@@ -25,7 +25,7 @@ CREATE DATABASE `looper`;
 USE `looper`;
 
 --
--- Table structure for table `exercise`
+-- Table structure for table `exercises`
 --
 
 DROP TABLE IF EXISTS `exercises`;
@@ -42,12 +42,12 @@ CREATE TABLE `exercises` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `exercise`
+-- Dumping data for table `exercises`
 --
 
 LOCK TABLES `exercises` WRITE;
-/*!40000 ALTER TABLE `exercise` DISABLE KEYS */;
-/*!40000 ALTER TABLE `exercise` ENABLE KEYS */;
+/*!40000 ALTER TABLE `exercises` DISABLE KEYS */;
+/*!40000 ALTER TABLE `exercises` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
