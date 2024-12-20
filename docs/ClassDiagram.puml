@@ -74,7 +74,7 @@ package App\Model{
 
     class Fulfillment{
         - id : int
-        - timestamp_test : string
+        - timestamp_fulfillment : string
         - exercise : int | Exercise
         + {static} get(filter : []) : Model | bool {redefinition}
         + {static} getAll() : Model[] | bool {redefinition}
