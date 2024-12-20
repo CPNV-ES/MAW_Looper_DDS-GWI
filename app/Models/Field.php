@@ -31,7 +31,7 @@ class Field extends Model
 
         $filter = [['id', '=', $object->type]];
         $object->type = FieldType::get($filter);
-        return [$object];
+        return $object;
     }
 
     public static function getAll(): array|bool

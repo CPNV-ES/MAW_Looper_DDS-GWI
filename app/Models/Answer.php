@@ -26,8 +26,15 @@ class Answer extends Model
 
                 $answer[$key] = $value;
             }
+
+            return $answer;
         }
 
+        $filter = [['id', '=', $answer->fulfillment]];
+        $answer->fulfillment = Fulfillment::get($filter);
+
+        $filter = [['id', '=', $answer->field]];
+        $answer->field = Field::get($filter);
         return $answer;
     }
 

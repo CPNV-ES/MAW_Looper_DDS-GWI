@@ -8,12 +8,27 @@ use DateTime;
 class Fulfillment extends Model
 {
     public int $id;
-    public \DateTime $timestamp_test;
+    public string $timestamp_fulfillment;
     public int | Exercise $exercise;
 
-    public static function get(array $filter): Model|bool
+    public static function get(array $filter): Model|bool|array
     {
         $fulfillment = parent::get($filter);
+
+        if (is_bool($fulfillment)) {
+            return false;
+        }
+
+        if (is_array($fulfillment)) {
+            foreach ($fulfillment as $key => $item) {
+                $filter = [['id', '=', $item->exercise]];
+                $item->exercise = Exercise::get($filter);
+
+                $fulfillment[$key] = $item;
+            }
+
+            return $fulfillment;
+        }
 
         $filter = [['id', '=', $fulfillment->exercise]];
         $fulfillment->exercise = Exercise::get($filter);

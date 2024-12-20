@@ -20,7 +20,11 @@ class Exercise extends Model
         $exercise->status = Status::get($filter);
 
         $filter = [['exercise_id', '=', $exercise->id]];
-        $exercise->count_fields = Field::get($filter) ? count((Field::get($filter))) : 0;
+        $field = Field::get($filter);
+
+        if (!is_bool($field)) {
+            $exercise->count_fields = is_array($field) ? count($field) : 1;
+        }
 
         return $exercise;
     }
@@ -38,7 +42,12 @@ class Exercise extends Model
             $exercise->status = Status::get($filter);
 
             $filter = [['exercise_id', '=', $exercise->id]];
-            $exercise->count_fields = Field::get($filter) ? count((Field::get($filter))) : 0;
+            $field = Field::get($filter);
+
+            $exercise->count_fields = 0;
+            if (!is_bool($field)) {
+                $exercise->count_fields = is_array($field) ? count($field) : 1;
+            }
 
             $exercises[$key] = $exercise;
         }
