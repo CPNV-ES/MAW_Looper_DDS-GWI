@@ -191,4 +191,17 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+-- Insert default values for status and types tables
+INSERT INTO status (id, title)
+VALUES
+    (1, 'Building'),
+    (2, 'Answering'),
+    (3, 'Closed');
+
+INSERT INTO types (id, title)
+VALUES
+    (1, 'Single line text'),
+    (2, 'List of single lines'),
+    (3, 'Multi-line text');
+
 -- Dump completed on 2024-09-26  8:06:22
