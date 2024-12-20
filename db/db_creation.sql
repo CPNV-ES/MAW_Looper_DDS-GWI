@@ -104,58 +104,58 @@ LOCK TABLES `status` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `tests`
+-- Table structure for table `fulfillments`
 --
 
-DROP TABLE IF EXISTS `tests`;
+DROP TABLE IF EXISTS `fulfillments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tests` (
+CREATE TABLE `fulfillments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `timestamp_test` date NOT NULL,
+  `timestamp_fulfillment` date NOT NULL,
   `exercise_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `tests_exercises_id_fk` (`exercise_id`),
-  CONSTRAINT `tests_exercises_id_fk` FOREIGN KEY (`exercise_id`) REFERENCES `exercises` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `fulfillments_exercises_id_fk` (`exercise_id`),
+  CONSTRAINT `fulfillments_exercises_id_fk` FOREIGN KEY (`exercise_id`) REFERENCES `exercises` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tests`
+-- Dumping data for table `fulfillments`
 --
 
-LOCK TABLES `tests` WRITE;
-/*!40000 ALTER TABLE `tests` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tests` ENABLE KEYS */;
+LOCK TABLES `fulfillments` WRITE;
+/*!40000 ALTER TABLE `fulfillments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fulfillments` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `tests_answer_fields`
+-- Table structure for table `fulfillments_answer_fields`
 --
 
-DROP TABLE IF EXISTS `tests_answer_fields`;
+DROP TABLE IF EXISTS `fulfillments_answer_fields`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tests_answer_fields` (
+CREATE TABLE `fulfillments_answer_fields` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `answer` varchar(250) DEFAULT NULL,
-  `test_id` int(11) NOT NULL,
+  `fulfillment_id` int(11) NOT NULL,
   `field_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `tests_answer_fields_tests_id_fk` (`test_id`),
-  KEY `tests_answer_fields_fields_id_fk` (`field_id`),
-  CONSTRAINT `tests_answer_fields_fields_id_fk` FOREIGN KEY (`field_id`) REFERENCES `fields` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `tests_answer_fields_tests_id_fk` FOREIGN KEY (`test_id`) REFERENCES `tests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `fulfillments_answer_fields_fulfillments_id_fk` (`fulfillment_id`),
+  KEY `fulfillments_answer_fields_fields_id_fk` (`field_id`),
+  CONSTRAINT `fulfillments_answer_fields_fields_id_fk` FOREIGN KEY (`field_id`) REFERENCES `fields` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fulfillments_answer_fields_fulfillments_id_fk` FOREIGN KEY (`fulfillment_id`) REFERENCES `fulfillments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tests_answer_fields`
+-- Dumping data for table `fulfillments_answer_fields`
 --
 
-LOCK TABLES `tests_answer_fields` WRITE;
-/*!40000 ALTER TABLE `tests_answer_fields` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tests_answer_fields` ENABLE KEYS */;
+LOCK TABLES `fulfillments_answer_fields` WRITE;
+/*!40000 ALTER TABLE `fulfillments_answer_fields` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fulfillments_answer_fields` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

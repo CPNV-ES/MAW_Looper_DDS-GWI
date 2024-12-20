@@ -1,0 +1,96 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+left to right direction
+
+package App\Core{
+    class Model {
+        + {static} db : Database
+        + {static} get(filter : []) : Model | bool | Model[]
+        + {static} getAll() : Model[] | bool
+        + {static} insert(values : []) : string | bool
+        + {static} update(values : [], filters : []) : bool
+        + {static} delete(filter : []) : bool
+        + {static} table() : string | null
+        - setValues(values : []) : void
+    }
+
+    class Database {
+        - host : string
+        - port : string
+        - dbName : string
+        - username : string
+        - password : string
+        + select(table : string, columns : [], filter : [] = [], count : int = 0, offset : int = 0, orderBy : [] = []) : []
+        + insert(table : string, values : []) : bool | Exception
+        + update(table : string, values : [], conditions : []) : bool | Exception
+        + delete(table : string, conditions : []) : bool | Exception
+        - dbConnection() : PDO
+    }
+
+    Model "1" --> "1" Database
+}
+
+package App\Model{
+    class Answer{
+        + id : int
+        + answer : string
+        + fulfillment : int | Fulfillment
+        + field : int | Field
+        + {static} get(filter : []) : Model | bool | Model[] {redefinition}
+        + {static} table() : string | null  {redefinition}
+    }
+    Answer "1" --> "0..*" Fulfillment
+    Answer "1" --> "0..*" Field
+
+    class Field{
+        + id : int
+        + title : string
+        + type : int | FieldType
+        + exercise : int | Exercise
+        + {static} get(filter : []) : Model | bool | Model[] {redefinition}
+        + {static} getAll() : Model[] | bool {redefinition}
+    }
+    Field "1" --> "0..*" FieldType
+    Field "1" --> "0..*" Exercise
+
+    class Exercise{
+        + id : int
+        + name : string
+        + status : int | Status
+        + count_fields : int
+        + {static} get(filter : []) : Model | bool {redefinition}
+        + {static} getAll() : Model[] | bool {redefinition}
+        + {static} insert() : string | bool {redefinition}
+        + {static} delete() : bool {redefinition}
+    }
+    Exercise "1" --> "0..*" Status
+
+    class FieldType{
+        - id : int
+        - title : string
+        + {static} table() : string | null {redefinition}
+    }
+
+    class Fulfillment{
+        - id : int
+        - timestamp_fulfillment : string
+        - exercise : int | Exercise
+        + {static} get(filter : []) : Model | bool {redefinition}
+        + {static} getAll() : Model[] | bool {redefinition}
+    }
+    Fulfillment "1" --> "0..*" Exercise
+
+    class Status{
+        - id : int
+        - title : string
+    }
+}
+
+Answer --|> Model
+Field --|> Model
+Exercise --|> Model
+FieldType --|> Model
+Fulfillment --|> Model
+
+@enduml

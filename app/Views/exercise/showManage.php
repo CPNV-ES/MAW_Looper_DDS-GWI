@@ -16,7 +16,7 @@ $exercisesClosed = array_filter($exercises, function ($exercise) {
     return ($exercise->status->title == 'Closed');
 });
 
-require_once "components/head.php";
+require_once __DIR__ . "/../components/head.php";
 ?>
 
 <div class="manageExercise max-w-[112rem] flex mx-auto space-y-10 md:space-x-10 md:space-y-0 flex-wrap">
@@ -32,8 +32,8 @@ require_once "components/head.php";
                     <?php
                     $title = $exercise->name;
                     $exerciseId = $exercise->id;
-                    $ready = boolval($exercise->fields);
-                    require "components/manageExercise/cell-building.php"
+                    $ready = $exercise->count_fields > 0;
+                    require __DIR__ . "/../components/manageExercise/cell-building.php"
                     ?>
                 </tr>
             <?php endforeach; ?>
@@ -51,7 +51,7 @@ require_once "components/head.php";
                     <?php
                     $title = $exercise->name;
                     $exerciseId = $exercise->id;
-                        require "components/manageExercise/cell-answering.php"
+                    require __DIR__ . "/../components/manageExercise/cell-answering.php"
                     ?>
                 </tr>
             <?php endforeach; ?>
@@ -69,7 +69,7 @@ require_once "components/head.php";
                     <?php
                     $title = $exercise->name;
                     $exerciseId = $exercise->id;
-                        require "components/manageExercise/cell-closed.php"
+                    require __DIR__ . "/../components/manageExercise/cell-closed.php"
                     ?>
                 </tr>
             <?php endforeach; ?>
@@ -79,4 +79,4 @@ require_once "components/head.php";
 
 <?php
 $pageContent = ob_get_clean();
-require_once "gabarit.php";
+require_once __DIR__ . "/../gabarit.php";

@@ -2,13 +2,13 @@
 ob_start();
 
 $headColor = "orange";
-$headTitle = "Exercise : <a href=\"/exercises/"
+$headTitle = "Exercise : <a href=\"/exercise/"
     . $exercise->id .
     "/fields\" class=\"font-bold\">"
     . $exercise->name .
     "</a>";
 
-require_once "components/head.php";
+require_once __DIR__ . "/../components/head.php";
 ?>
 
     <div class="editFields max-w-[112rem] flex mx-auto space-y-10 md:space-x-10 md:space-y-0 flex-wrap">
@@ -21,7 +21,6 @@ require_once "components/head.php";
                 <input type="text" name="field[label]" id="field_label" value="<?=$field->name?>" required>
                 <label for="field_value_kind" class="mt-10">Value kind</label>
                 <select name="field[value_kind]" id="field_value_kind" required>
-                    <!-- ToDo fetch fields type (name + id) directly from DB -->
                     <option
                         <?php if ($field->type->id == 1) :?>
                             selected
@@ -48,4 +47,4 @@ require_once "components/head.php";
 
 <?php
 $pageContent = ob_get_clean();
-require_once "gabarit.php";
+require_once __DIR__ . "/../gabarit.php";
