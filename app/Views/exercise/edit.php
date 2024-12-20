@@ -28,7 +28,6 @@ require_once __DIR__ . "/../components/head.php";
                 </tr>
             <?php endforeach; ?>
         </table>
-        <!-- ToDo remove else once figured out how to fix onsubmit for php -->
         <?php if (isset($fields) && count($fields) > 0): ?>
             <form action="/exercises/<?=$exercise->id?>" method="POST">
                 <input type="hidden" name="_method" value="PUT"/>

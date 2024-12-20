@@ -20,7 +20,6 @@ require_once __DIR__ . "/../components/head.php";
                 <tr>
                     <td>
                         <div class="title">
-                            <!-- ToDo deal with color of links -->
                             <a href="/exercises/<?=$exercise->id?>/fulfillments/<?=$fulfillment->id?>">
                                 <?=$fulfillment->timestamp_fulfillment?>
                             </a>

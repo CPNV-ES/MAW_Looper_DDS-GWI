@@ -14,7 +14,6 @@ require_once __DIR__ . "/../components/head.php";
                 <th>Take</th>
             <?php foreach ($fields as $field) : ?>
                 <th>
-                    <!-- ToDo deal with color of links -->
                     <a href="/exercises/<?=$exercise->id?>/results/<?=$field->id?>">
                         <?=$field->name?>
                     </a>
@@ -24,7 +23,6 @@ require_once __DIR__ . "/../components/head.php";
             <?php foreach ($fulfillments as $fulfillment) : ?>
                 <tr>
                     <td>
-                        <!-- ToDo deal with color of links -->
                         <a href="/exercises/<?=$fulfillment->exercise->id?>/fulfillments/<?=$fulfillment->id?>"><?=$fulfillment->timestamp_fulfillment?></a>
                     </td>
                 <?php foreach ($fields as $key => $field) : ?>
