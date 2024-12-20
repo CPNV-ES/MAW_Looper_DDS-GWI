@@ -13,7 +13,8 @@ require_once __DIR__ . "/../components/head.php";
 
     <?php foreach ($exercises as $exercise) : ?>
         <?php
-        if ($exercise->status->id > 1) {
+        //Status id 2 is Answering
+        if ($exercise->status->id == 2) {
             $title = $exercise->name;
             $exerciseId = $exercise->id;
             require __DIR__ . "/../components/exercise.php";
