@@ -12,6 +12,7 @@ class FieldController
         $filter = [['id', '=', $exerciseId]];
         $exercise = Exercise::get($filter);
 
+        //Status id 1 is Building
         if ($exercise->status->id != 1) {
             header('Location: /');
             return;
@@ -37,6 +38,7 @@ class FieldController
         $filter = [['id', '=', $exerciseId]];
         $exercise = Exercise::get($filter);
 
+        //Status id 1 is Building
         if ($exercise->status->id != 1) {
             header('Location: /');
             return;
@@ -53,6 +55,7 @@ class FieldController
         $filter = [['id', '=', $exerciseId]];
         $exercise = Exercise::get($filter);
 
+        //Status id 1 is Building
         if ($exercise->status->id != 1) {
             header('Location: /');
             return;
@@ -69,6 +72,7 @@ class FieldController
         $filter = [['id', '=', $exerciseId]];
         $exercise = Exercise::get($filter);
 
+        //Status id 1 is Building
         if ($exercise->status->id != 1) {
             header('Location: /');
             return;

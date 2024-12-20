@@ -3,10 +3,8 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
-use App\Models\Answer;
 use App\Models\Exercise;
 use App\Models\Field;
-use App\Models\Fulfillment;
 use App\Models\Test;
 
 class ExerciseController extends Controller
@@ -70,7 +68,6 @@ class ExerciseController extends Controller
             return;
         }
 
-        //ToDo make an 404 error page
         $filter = [['id', '=', $exerciseId]];
         Exercise::delete($filter);
 
@@ -82,6 +79,7 @@ class ExerciseController extends Controller
         $filter = [['id', '=', $exerciseId]];
         $exercise = Exercise::get($filter);
 
+        //Status id 1 is Building
         if ($exercise->status->id != 1) {
             header('Location: /');
             return;
@@ -107,6 +105,7 @@ class ExerciseController extends Controller
         $filter = [['id', '=', $exerciseId]];
         $exercise = Exercise::get($filter);
 
+        //Status id 1 is Building. Status id 2 is Answering
         if ($exercise->status->id == 1 || $exercise->status->id == 2) {
             $values = [
                 'status_id' => $exercise->status->id + 1

@@ -116,6 +116,7 @@ class AnswerController
         $filter = [['id', '=', $exerciseId]];
         $exercise = Exercise::get($filter);
 
+        //Status id 2 is Answering
         if ($exercise->status->id != 2) {
             header("Location: /");
             return;
@@ -154,6 +155,7 @@ class AnswerController
         $filter = [['id', '=', $exerciseId]];
         $exercise = Exercise::get($filter);
 
+        //Status id 2 is Answering
         if ($exercise->status->id != 2) {
             header("Location: /");
             return;
