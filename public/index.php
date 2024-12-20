@@ -1,5 +1,7 @@
 <?php
 
+use App\Controllers\AnswerController;
+use App\Controllers\FieldController;
 use App\Core\Router;
 use App\Controllers\ExerciseController;
 use App\Models\Database;
@@ -9,6 +11,8 @@ require_once __DIR__ . "/../vendor/autoload.php";
 
 $router = new Router();
 $exercise = new ExerciseController();
+$answer = new AnswerController();
+$field = new FieldController();
 
 Model::$db = new Database();
 
@@ -21,74 +25,66 @@ $router->get('/', function () {
 ###################
 
 # "Take an exercise" page
-$router->get('/exercises/answering', [$exercise, 'takeAnExercise']);
+$router->get('/exercises/answering', [$exercise, 'show']);
 
 # "Create an exercise" page
-$router->get('/exercises/new', function () {
-    require_once __DIR__ . "/../app/Views/createAnExercise.php";
-});
+$router->get('/exercises/new', [$exercise, 'create']);
 
 # "Manage an exercise" page
-$router->get('/exercises', [$exercise, 'exercisesPage']);
+$router->get('/exercises', [$exercise, 'showManage']);
 
 ###############
 # OTHER PAGES #
 ###############
 
 # Answer an exercise (new answer)
-$router->get('/exercises/{exerciseId}/fulfillments/new', [$exercise, 'answerExercisePage']);
+$router->get('/exercises/{exerciseId}/fulfillments/new', [$answer, 'create']);
 
 # Answer an exercise (edit answer)
-$router->get('/exercises/{exerciseId}/fulfillments/{fulfillmentId}/edit', [$exercise, 'editAnswerPage']);
+$router->get('/exercises/{exerciseId}/fulfillments/{fulfillmentId}/edit', [$answer, 'edit']);
 
-# Access 1 exercise result
-$router->get('/exercises/{exerciseId}/fulfillments/{answerId}', function ($exerciseId, $answerId) {
-    echo "Access an exercise result (GET)";
-});
+# Access 1 fulfillment results
+$router->get('/exercises/{exerciseId}/fulfillments/{fulfillmentId}', [$answer, 'showByFulfillment']);
 
 # Access all exercise results
-$router->get('/exercises/{exerciseId}/results', function ($exerciseId) {
-    echo "Access exercise results (GET)";
-});
+$router->get('/exercises/{exerciseId}/results', [$answer, 'show']);
 
 # Access exercise results (per question)
-$router->get('/exercises/{exerciseId}/results/{fieldId}', function ($exerciseId, $fieldId) {
-    echo "Access exercise results (GET)";
-});
+$router->get('/exercises/{exerciseId}/results/{fieldId}', [$answer, 'showByField']);
 
 # Edit an exercise
-$router->get('/exercises/{exerciseId}/fields', [$exercise, 'editExercisePage']);
+$router->get('/exercises/{exerciseId}/fields', [$exercise, 'edit']);
 
 # Edit a field
-$router->get('/exercises/{exerciseId}/fields/{fieldId}/edit', [$exercise, 'editFieldPage']);
+$router->get('/exercises/{exerciseId}/fields/{fieldId}/edit', [$field, 'edit']);
 
 ###########
 # ACTIONS #
 ###########
 
 # Create an exercise
-$router->post('/exercises', [$exercise, 'exerciseCreation']);
+$router->post('/exercises', [$exercise, 'publish']);
 
 # Update an exercise status
-$router->put('/exercises/{exerciseId}', [$exercise, 'exerciseStatusAlteration']);
+$router->put('/exercises/{exerciseId}', [$exercise, 'update']);
 
 # Delete an exercise
-$router->delete('/exercises/{exerciseId}', [$exercise, 'exerciseDelete']);
+$router->delete('/exercises/{exerciseId}', [$exercise, 'delete']);
 
 # Answer an exercise (new answer)
-$router->post('/exercises/{exerciseId}/fulfillments', [$exercise, 'answer']);
+$router->post('/exercises/{exerciseId}/fulfillments', [$answer, 'publish']);
 
 # Answer an exercise (edit answer)
-$router->patch('/exercises/{exerciseId}/fulfillments/{fulfillmentId}', [$exercise, 'editAnswer']);
+$router->patch('/exercises/{exerciseId}/fulfillments/{fulfillmentId}', [$answer, 'update']);
 
 # Create exercise fields
-$router->post('/exercises/{exerciseId}/fields', [$exercise, 'addField']);
+$router->post('/exercises/{exerciseId}/fields', [$field, 'publish']);
 
 # Delete exercise field
-$router->delete('/exercises/{exerciseId}/fields/{fieldId}', [$exercise, 'deleteField']);
+$router->delete('/exercises/{exerciseId}/fields/{fieldId}', [$field, 'delete']);
 
 # Update exercise field
-$router->patch('/exercises/{exerciseId}/fields/{fieldId}', [$exercise, 'editField']);
+$router->patch('/exercises/{exerciseId}/fields/{fieldId}', [$field, 'update']);
 
 # If no route matches, show a 404 error
 if (!$router->routeMatched()) {
