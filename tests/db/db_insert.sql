@@ -18,12 +18,12 @@ VALUES
     (899999, 'ph_00', 899999, 899999),
     (899998, 'ph_01', 899998, 899998),
     (899997, 'ph_02', 899997, 899997);
-INSERT INTO tests (id, timestamp_test, exercise_id)
+INSERT INTO fulfillments (id, timestamp_fulfillment, exercise_id)
 VALUES
     (899999, '1111-11-12', 899999),
     (899998, '1111-11-11', 899998),
     (899997, '1111-11-10', 899997);
-INSERT INTO tests_answer_fields (id, answer, test_id, field_id)
+INSERT INTO fulfillments_answer_fields (id, answer, test_id, field_id)
 VALUES
     (899999, 'ph_00', 899999, 899999),
     (899998, 'ph_01', 899998, 899998),

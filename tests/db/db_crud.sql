@@ -32,15 +32,15 @@ UPDATE exercises
 SET name = 'ph_2';
 UPDATE fields
 SET name = 'ph_2';
-UPDATE tests
-SET timestamp_test = '2222-12-22';
-UPDATE tests_answer_fields
+UPDATE fulfillments
+SET timestamp_fulfillment = '2222-12-22';
+UPDATE fulfillments_answer_fields
 SET answer = 'ph_2';
 
 DELETE
-FROM tests_answer_fields;
+FROM fulfillments_answer_fields;
 DELETE
-FROM tests;
+FROM fulfillments;
 DELETE
 FROM fields;
 DELETE
