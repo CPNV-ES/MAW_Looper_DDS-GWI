@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Core\Model;
-use DateTime;
 
 class Fulfillment extends Model
 {

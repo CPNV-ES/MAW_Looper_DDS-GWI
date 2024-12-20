@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Core\Model;
-use Exception;
 
 class Exercise extends Model
 {
