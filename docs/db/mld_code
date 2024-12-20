@@ -2,8 +2,8 @@ classDiagram
     note "Projet: MAW11 DB
         Titre: MLD DB
         Auteur: Geoffroy Wildi
-        Version: 1.0 du 24.09.2024
-        Source: MAW11 DB, 1.1 du 24.09.2024"
+        Version: 1.1 du 20.12.2024
+        Projet: MAW11 - Looper"
 class status {
     id Int
     title Text
@@ -29,24 +29,24 @@ class fields {
     pk(id)
     fk(type_id, exercise_id)
 }
-class tests {
+class fulfillments {
     id Int
-    timestamp_test Date
+    timestamp_fulfillment Datetime
     exercise_id Int
     pk(id)
     fk(exercise_id)
 }
-class tests_answer_fields {
+class fulfillments_answer_fields {
     id Int
     answer Text
-    test_id Int
+    fulfillment_id Int
     field_id Int
     pk(id)
-    fk(test_id, field_id)
+    fk(fulfillment_id, field_id)
 }
-tests_answer_fields  -->  tests
-tests_answer_fields  -->  fields
-tests --> exercises
+fulfillments_answer_fields  -->  fulfillments
+fulfillments_answer_fields  -->  fields
+fulfillments --> exercises
 fields --> types
 fields --> exercises
 exercises --> status
