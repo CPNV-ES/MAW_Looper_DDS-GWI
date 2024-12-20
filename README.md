@@ -63,7 +63,7 @@ php -S localhost:8080
 ### Deployment (On integration environment)
 
 #### Prerequisites
-- **Web Server:** Apache, Nginx, ...
+- **Web Server:** Apache
 - **PHP:** 8.3.11
 - **Database:** MariaDB
 - **Composer:** For managing project dependencies
@@ -133,8 +133,8 @@ sudo chmod 755 ../MAW_Looper_DDS-GWI/
             ├── Router.php
             ├── Model.php       # Base Model class for other Models
             └── Controller.php  # Base Controller class for other Controllers
-    ├── config                  # Contains all app configuration files
     ├── db                      # Contains all DB related files
+    ├── docs
     ├── public/
         ├── css
         ├── img
